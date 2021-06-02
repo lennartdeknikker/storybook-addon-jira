@@ -4,28 +4,24 @@ import { Icons, IconButton } from "@storybook/components";
 import { TOOL_ID } from "./constants";
 
 export const Tool = () => {
-  const [{ myAddon }, updateGlobals] = useGlobals();
+  const [{ outlineActive }, updateGlobals] = useGlobals()
 
-  const toggleMyTool = useCallback(
+  const toggleOutline = useCallback(
     () =>
       updateGlobals({
-        myAddon: !myAddon,
+        outlineActive: !outlineActive,
       }),
-    [myAddon]
+    [outlineActive]
   );
 
   return (
     <IconButton
       key={TOOL_ID}
-      active={myAddon}
-      title="Enable my addon"
-      onClick={toggleMyTool}
+      active={outlineActive}
+      title="Apply outlines to the preview"
+      onClick={toggleOutline}
     >
-      {/*
-        Checkout https://next--storybookjs.netlify.app/official-storybook/?path=/story/basics-icon--labels
-        for the full list of icons
-      */}
-      <Icons icon="lightning" />
+      <Icons icon="outline" />
     </IconButton>
   );
 };
