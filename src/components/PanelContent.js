@@ -11,6 +11,7 @@ export const RequestDataButton = styled(Button)({
  * Checkout https://github.com/storybookjs/storybook/blob/next/addons/jest/src/components/Panel.tsx
  * for a real world example
  */
+console.log(convert(themes.normal).color)
 export const PanelContent = ({ results, fetchData, clearData }) => (
   <TabsState
     initial="overview"
@@ -23,9 +24,7 @@ export const PanelContent = ({ results, fetchData, clearData }) => (
     >
       <Placeholder>
         <Fragment>
-          Addons can gather details about how a story is rendered. This is panel
-          uses a tab pattern. Click the button below to fetch data for the other
-          two tabs.
+          There might be standing JIRA tickets for this component. Click the button to fetch these.
         </Fragment>
         <Fragment>
           <RequestDataButton
@@ -34,28 +33,34 @@ export const PanelContent = ({ results, fetchData, clearData }) => (
             onClick={fetchData}
             style={{ marginRight: 16 }}
           >
-            Request data
-          </RequestDataButton>
-
-          <RequestDataButton outline small onClick={clearData}>
-            Clear data
+            Fetch tickets
           </RequestDataButton>
         </Fragment>
       </Placeholder>
     </div>
     <div
-      id="danger"
-      title={`${results.danger.length} Danger`}
-      color={convert(themes.normal).color.negative}
+      id="toDo"
+      title={`${results.toDo.length} To do`}
     >
-      <List items={results.danger} />
+      <List items={results.toDo} />
     </div>
     <div
-      id="warning"
-      title={`${results.warning.length} Warning`}
-      color={convert(themes.normal).color.warning}
+      id="inProgress"
+      title={`${results.inProgress.length} In progress`}
     >
-      <List items={results.warning} />
+      <List items={results.inProgress} />
+    </div>
+    <div
+      id="readyForTest"
+      title={`${results.readyForTest.length} Ready for test`}
+    >
+      <List items={results.readyForTest} />
+    </div>
+    <div
+      id="done"
+      title={`${results.done.length} Done`}
+    >
+      <List items={results.done} />
     </div>
   </TabsState>
 );
