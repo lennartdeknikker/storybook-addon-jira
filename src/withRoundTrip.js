@@ -42,12 +42,16 @@ export const withRoundTrip = (storyFn) => {
       emit(EVENTS.RESULT, {
         toDo: [],
         inProgress: [],
+        readyForTest: [],
+        done: []
       });
     },
     [EVENTS.CLEAR]: () => {
       emit(EVENTS.RESULT, {
         toDo: [],
         inProgress: [],
+        readyForTest: [],
+        done: []
       });
     },
   });
