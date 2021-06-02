@@ -31,8 +31,7 @@ function displayToolState(selector, state) {
     rootElement.appendChild(preElement);
   }
 
-  preElement.innerText = `This snippet is injected by the withGlobals decorator.
-It updates as the user interacts with the ⚡ tool in the toolbar above.
+  preElement.innerText = `Here I can display a message that Jira is connected or maybe a JIRA login prompt.
 
 ${JSON.stringify(state, null, 2)}
 `;
