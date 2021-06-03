@@ -15,21 +15,12 @@ export const RequestDataButton = styled(Button)({
 export const PanelContent = ({ results, fetchData }) => {
   const value = useParameter('jira', null)
   if (value?.id) {
-    const myHeaders = new Headers();
-    const authHeader = `Basic ${btoa(`${process.env?.STORYBOOK_JIRA_USERNAME}:${process.env?.STORYBOOK_JIRA_API_KEY}`)}`
-    myHeaders.append("Authorization", authHeader);
-    myHeaders.append("Cookie", "atlassian.xsrf.token=B7QB-6G0X-0S3C-7RF3_77962b1be8a15b1c126b57d47f209ef03115d169_lin");
-    
-    const requestOptions = {
-      method: 'GET',
-      headers: myHeaders,
-      redirect: 'follow'
-    };
-    
-    fetch(`https://momkai.atlassian.net/rest/api/latest/issue/${value.id}`, requestOptions)
+
+    fetch(`/api?ticketId=${value?.id}`)
     .then(response => response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
+    
   }
 
   return (
