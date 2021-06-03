@@ -4,7 +4,7 @@ import { EVENTS } from "./constants";
 
 export const withRoundTrip = (storyFn) => {
   const emit = useChannel({
-    [EVENTS.REQUEST]: () => {
+    [EVENTS.REQUEST]: async () => {
       emit(EVENTS.RESULT, {
         toDo: [
           {
