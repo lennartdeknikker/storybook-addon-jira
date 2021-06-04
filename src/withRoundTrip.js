@@ -6,7 +6,6 @@ export const withRoundTrip = (storyFn) => {
   const emit = useChannel({
     [EVENTS.REQUEST]: async ({ ticketId }) => {
       const data = ticketId ? JSON.parse(await (await fetch(`/api?ticketId=${ticketId}`)).text()) : null
-      console.log('🚀 ~ data', data)
       const subTasks = data.fields.subtasks
       const groupedOnStatus = {
         toDo: [],
