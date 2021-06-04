@@ -3,6 +3,7 @@ import { styled, themes, convert } from "@storybook/theming";
 import { TabsState, Placeholder, Button } from "@storybook/components";
 import { List } from "./List";
 import { useParameter } from '@storybook/api'
+import parseCamelCase from '../helpers/parseCamelCase'
 
 export const RequestDataButton = styled(Button)({
   marginTop: "1rem",
@@ -10,6 +11,10 @@ export const RequestDataButton = styled(Button)({
 
 export const PanelContent = ({ results, fetchData, fetchingState }) => {
   const value = useParameter('jira', null)
+
+  useEffect(() =>{
+    console.log(results)
+  }, [results])
 
   return (
     <TabsState
@@ -31,6 +36,13 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
                   There's no tickets registered for this component.
                 </p>  
             }
+            <p>
+              <ul>
+                {Object.keys(results.data).map(key => 
+                  <li>{parseCamelCase(key)}: {results.data[key]}</li>
+                )}
+              </ul>
+            </p>
           </Fragment>
           {value?.id &&
             <Fragment>

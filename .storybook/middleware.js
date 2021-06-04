@@ -14,7 +14,7 @@ module.exports = function expressMiddleware (router) {
       };
 
       fetch(`${process.env.STORYBOOK_JIRA_API_ENDPOINT}/${req.query?.ticketId}`, requestOptions)
-        .then(response => response.text())
+        .then(response => response.json())
         .then(result => {
           res.send(result)
         })

@@ -11,6 +11,7 @@ export const Panel = (props) => {
     inProgress: [],
     readyForTest: [],
     done: [],
+    data: {}
   });
 
   const [fetchingState, setFetchingState] = useState(false)

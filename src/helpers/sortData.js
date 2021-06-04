@@ -13,6 +13,15 @@ const sortData = (data) => {
       data: subTask
     })
   }
+  groupedOnStatus.data = {
+    status: data?.fields?.status?.name,
+    lastUpdated: new Date(data?.fields?.updated).toDateString(),
+    Created: new Date(data?.fields?.created).toDateString(),
+    AssignedTo:data?.fields?.assignee.displayName,
+    Description: data?.fields?.summary,
+    Priority: data?.fields?.priority.name,
+  }
+  groupedOnStatus.remainingData = data
   return groupedOnStatus
 }
 

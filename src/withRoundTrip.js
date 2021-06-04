@@ -10,6 +10,7 @@ export const withRoundTrip = (storyFn) => {
       if (ticketId) {
         const fetchedData = await fetch(`/api?ticketId=${ticketId}`)
         data = await fetchedData.json()
+        console.log('🚀 ~ data', data)
       }
       const groupedOnStatus = sortData(data)
 
@@ -20,7 +21,8 @@ export const withRoundTrip = (storyFn) => {
         toDo: [],
         inProgress: [],
         readyForTest: [],
-        done: []
+        done: [],
+        data: {}
       });
     },
     [EVENTS.CLEAR]: () => {
@@ -28,7 +30,8 @@ export const withRoundTrip = (storyFn) => {
         toDo: [],
         inProgress: [],
         readyForTest: [],
-        done: []
+        done: [],
+        data: {}
       });
     },
   });
