@@ -8,10 +8,6 @@ export const RequestDataButton = styled(Button)({
   marginTop: "1rem",
 });
 
-/**
- * Checkout https://github.com/storybookjs/storybook/blob/next/addons/jest/src/components/Panel.tsx
- * for a real world example
- */
 export const PanelContent = ({ results, fetchData }) => {
   const value = useParameter('jira', null)
 
