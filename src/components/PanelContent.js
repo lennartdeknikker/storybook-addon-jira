@@ -25,7 +25,7 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
           <Fragment>
             {value?.id
               ? <p>Main ticket:
-                  <a href={`https://momkai.atlassian.net/rest/api/latest/issue/${value.id}`}> {value.id}</a>
+                  <a href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${value.id}`}> {value.id}</a>
                 </p>
               : <p>
                   There's no tickets registered for this component.

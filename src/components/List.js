@@ -72,7 +72,7 @@ console.log('🚀 ~ item', item)
             }}
           />
           {item.title}
-          <Link href={`${process.env.STORYBOOK_JIRA_BASE_URL}${item.data.key}`} target="_blank">
+          <Link href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${item.data.key}`} target="_blank">
             <Icon
               icon="link"
               size={10}
