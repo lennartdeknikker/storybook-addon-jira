@@ -1,19 +1,29 @@
-const sortData = (data) => {
-  const subTasks = data?.fields?.subtasks
-  const groupedOnStatus = {
+const parseData = (data) => {
+  const parsedData = {
+    overview: null,
+    subtasks: null,
+    data: data
+  }
+
+  const parsedSubtasksData = {
     toDo: [],
     inProgress: [],
     readyForTest: [],
     done:[]
   }
-  for (const subTask of subTasks) {
-    groupedOnStatus[subTask.fields.status.name.toLowerCase()].push({
+  
+  const subtasksData = data?.fields?.subtasks
+  for (const subTask of subtasksData) {
+    parsedSubtasksData[subTask.fields.status.name.toLowerCase()].push({
       title: subTask.key,
       description: subTask.fields.summary,
       data: subTask
     })
   }
-  groupedOnStatus.data = {
+
+  parsedData.subtasks = parsedSubtasksData
+
+  parsedData.overview = {
     status: data?.fields?.status?.name,
     lastUpdated: new Date(data?.fields?.updated).toDateString(),
     Created: new Date(data?.fields?.created).toDateString(),
@@ -21,8 +31,8 @@ const sortData = (data) => {
     Description: data?.fields?.summary,
     Priority: data?.fields?.priority.name,
   }
-  groupedOnStatus.remainingData = data
-  return groupedOnStatus
+  console.log('data parsed to:', parsedData)
+  return parsedData
 }
 
-export default sortData
+export default parseData

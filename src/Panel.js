@@ -6,11 +6,9 @@ import { PanelContent } from "./components/PanelContent";
 
 export const Panel = (props) => {
   // https://storybook.js.org/docs/react/addons/addons-api#useaddonstate
-  const [results, setState] = useAddonState(ADDON_ID, {
-    toDo: [],
-    inProgress: [],
-    readyForTest: [],
-    done: [],
+  const [results, setResults] = useAddonState(ADDON_ID, {
+    overview: {},
+    subtasks: {},
     data: {}
   });
 
@@ -19,7 +17,7 @@ export const Panel = (props) => {
   // https://storybook.js.org/docs/react/addons/addons-api#usechannel
   const emit = useChannel({
     [EVENTS.RESULT]: (newResults) => {
-      setState(newResults)
+      setResults(newResults)
       setFetchingState(false)
     },
   });

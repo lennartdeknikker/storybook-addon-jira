@@ -33,8 +33,8 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
                 </p>  
             }
             <ul>
-              {Object.keys(results.data).map((key, index) => 
-                <li key={index}>{parseCamelCase(key)}: {results.data[key]}</li>
+              {Object.keys(results.overview).map((key, index) => 
+                <li key={index}>{parseCamelCase(key)}: {results.overview[key]}</li>
               )}
             </ul>
           </Fragment>
@@ -55,36 +55,36 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
           }
         </Placeholder>
       </div>
-      {results.toDo.length > 0 &&
+      {results?.subtasks?.toDo?.length > 0 &&
         <div
         id="toDo"
-        title={`To do (${results.toDo.length})`}
+        title={`To do (${results.subtasks.toDo.length})`}
         >
-          <List items={results.toDo} />
+          <List items={results.subtasks.toDo} />
         </div>
       }
-      {results.toDo.inProgress > 0 &&
+      {results?.subtasks?.inProgress?.length > 0 &&
         <div
           id="inProgress"
-          title={`In progress (${results.inProgress.length})`}
+          title={`In progress (${results.subtasks.inProgress.length})`}
         >
-          <List items={results.inProgress} />
+          <List items={results.subtasks.inProgress} />
         </div>
       }
-      {results.readyForTest.length > 0 &&
+      {results?.subtasks?.readyForTest?.length > 0 &&
         <div
           id="readyForTest"
-          title={`Ready for test (${results.readyForTest.length})`}
+          title={`Ready for test (${results.subtasks.readyForTest.length})`}
         >
-          <List items={results.readyForTest} />
+          <List items={results.subtasks.readyForTest} />
         </div>
       }
-      {results.done.length > 0 &&
+      {results?.subtasks?.done?.length > 0 &&
         <div
           id="done"
-          title={`Done (${results.done.length})`}
+          title={`Done (${results.subtasks.done.length})`}
         >
-          <List items={results.done} />
+          <List items={results.subtasks.done} />
         </div>
       }
     </TabsState>
