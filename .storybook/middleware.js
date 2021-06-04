@@ -8,7 +8,7 @@ module.exports = function expressMiddleware (router) {
       const authHeader = `Basic ${btoa(`${process.env?.STORYBOOK_JIRA_USERNAME}:${process.env?.STORYBOOK_JIRA_API_KEY}`)}`
       const cookieHeader = `atlassian.xsrf.token=${process.env.STORYBOOK_ATLASSIAN_XSRF_TOKEN}`
       myHeaders.append("Authorization", authHeader);
-      myHeaders.append("Cookie", cookieHeader);
+      // myHeaders.append("Cookie", cookieHeader);
 
       const requestOptions = {
         method: 'GET',
@@ -18,9 +18,9 @@ module.exports = function expressMiddleware (router) {
 
       fetch(`${process.env.STORYBOOK_JIRA_API_ENDPOINT}/${req.query?.ticketId}`, requestOptions)
         .then(response => response.text())
-        .then(result => console.log('got result'))
+        .then(result => {
+          res.send(result)
+        })
         .catch(error => console.log('error', error));
-
-    res.send('hello')
   })
 }

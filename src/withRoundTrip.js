@@ -4,39 +4,25 @@ import { EVENTS } from "./constants";
 
 export const withRoundTrip = (storyFn) => {
   const emit = useChannel({
-    [EVENTS.REQUEST]: async () => {
-      emit(EVENTS.RESULT, {
-        toDo: [
-          {
-            title: "Panels are the most common type of addon in the ecosystem",
-            description:
-              "For example the official @storybook/actions and @storybook/a11y use this pattern",
-          },
-          {
-            title:
-              "You can specify a custom title for your addon panel and have full control over what content it renders",
-            description:
-              "@storybook/components offers components to help you addons with the look and feel of Storybook itself",
-          },
-        ],
-        inProgress: [
-          {
-            title:
-              'This tabbed UI pattern is a popular option to display "test" reports.',
-            description:
-              "It's used by @storybook/addon-jest and @storybook/addon-a11y. @storybook/components offers this and other components to help you quickly build an addon",
-          },
-        ],
-        readyForTest: [
-          {
-            title:
-              'This tabbed UI pattern is a popular option to display "test" reports.',
-            description:
-              "It's used by @storybook/addon-jest and @storybook/addon-a11y. @storybook/components offers this and other components to help you quickly build an addon",
-          },
-        ],
-        done: []
-      });
+    [EVENTS.REQUEST]: async ({ ticketId }) => {
+      const data = ticketId ? JSON.parse(await (await fetch(`/api?ticketId=${ticketId}`)).text()) : null
+      console.log('🚀 ~ data', data)
+      const subTasks = data.fields.subtasks
+      const groupedOnStatus = {
+        toDo: [],
+        inProgress: [],
+        readyForTest: [],
+        done:[]
+      }
+      for (const subTask of subTasks) {
+        groupedOnStatus[subTask.fields.status.name.toLowerCase()].push({
+          title: subTask.key,
+          description: subTask.fields.summary,
+          data: subTask
+        })
+      }
+
+      emit(EVENTS.RESULT, groupedOnStatus);
     },
     [STORY_CHANGED]: () => {
       emit(EVENTS.RESULT, {

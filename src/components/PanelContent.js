@@ -14,14 +14,6 @@ export const RequestDataButton = styled(Button)({
  */
 export const PanelContent = ({ results, fetchData }) => {
   const value = useParameter('jira', null)
-  if (value?.id) {
-
-    fetch(`/api?ticketId=${value?.id}`)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
-    
-  }
 
   return (
     <TabsState
@@ -48,7 +40,7 @@ export const PanelContent = ({ results, fetchData }) => {
             <RequestDataButton
               secondary
               small
-              onClick={fetchData}
+              onClick={() => fetchData(value?.id)}
               style={{ marginRight: 16 }}
             >
               Fetch details

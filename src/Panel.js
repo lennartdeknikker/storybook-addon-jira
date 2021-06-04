@@ -7,6 +7,7 @@ import { PanelContent } from "./components/PanelContent";
 export const Panel = (props) => {
   // https://storybook.js.org/docs/react/addons/addons-api#useaddonstate
   const [results, setState] = useAddonState(ADDON_ID, {
+    resultData: [],
     toDo: [],
     inProgress: [],
     readyForTest: [],
@@ -22,7 +23,7 @@ export const Panel = (props) => {
     <AddonPanel {...props}>
       <PanelContent
         results={results}
-        fetchData={() => emit(EVENTS.REQUEST)}
+        fetchData={(ticketId) => emit(EVENTS.REQUEST, {ticketId: ticketId})}
         clearData={() => emit(EVENTS.CLEAR)}
       />
     </AddonPanel>
