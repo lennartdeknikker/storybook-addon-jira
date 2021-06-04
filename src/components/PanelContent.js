@@ -24,24 +24,26 @@ export const PanelContent = ({ results, fetchData }) => {
         <Placeholder>
           <Fragment>
             {value?.id
-              ? <p>Corresponding ticket:
-                  <a href={`https://momkai.atlassian.net/rest/api/latest/issue/${value.id}`}>{value.id}</a>
+              ? <p>Main ticket:
+                  <a href={`https://momkai.atlassian.net/rest/api/latest/issue/${value.id}`}> {value.id}</a>
                 </p>
               : <p>
                   There's no tickets registered for this component.
                 </p>  
             }
           </Fragment>
-          <Fragment>
-            <RequestDataButton
-              secondary
-              small
-              onClick={() => fetchData(value?.id)}
-              style={{ marginRight: 16 }}
-            >
-              Fetch details
-            </RequestDataButton>
-          </Fragment>
+          {value?.id &&
+            <Fragment>
+              <RequestDataButton
+                secondary
+                small
+                onClick={() => fetchData(value?.id)}
+                style={{ marginRight: 16 }}
+              >
+                Fetch details & subtasks
+              </RequestDataButton>
+            </Fragment>
+          }
         </Placeholder>
       </div>
       {results.toDo.length > 0 &&

@@ -1,6 +1,7 @@
 import { useChannel } from "@storybook/client-api";
 import { STORY_CHANGED } from "@storybook/core-events";
 import { EVENTS } from "./constants";
+import sortData from './helpers/sortData'
 
 export const withRoundTrip = (storyFn) => {
   const emit = useChannel({
@@ -10,20 +11,7 @@ export const withRoundTrip = (storyFn) => {
         const fetchedData = await fetch(`/api?ticketId=${ticketId}`)
         data = await fetchedData.json()
       }
-      const subTasks = data?.fields?.subtasks
-      const groupedOnStatus = {
-        toDo: [],
-        inProgress: [],
-        readyForTest: [],
-        done:[]
-      }
-      for (const subTask of subTasks) {
-        groupedOnStatus[subTask.fields.status.name.toLowerCase()].push({
-          title: subTask.key,
-          description: subTask.fields.summary,
-          data: subTask
-        })
-      }
+      const groupedOnStatus = sortData(data)
 
       emit(EVENTS.RESULT, groupedOnStatus);
     },
