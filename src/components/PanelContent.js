@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { styled, themes, convert } from "@storybook/theming";
 import { TabsState, Placeholder, Button } from "@storybook/components";
 import { List } from "./List";
@@ -8,7 +8,7 @@ export const RequestDataButton = styled(Button)({
   marginTop: "1rem",
 });
 
-export const PanelContent = ({ results, fetchData }) => {
+export const PanelContent = ({ results, fetchData, fetchingState }) => {
   const value = useParameter('jira', null)
 
   return (
@@ -37,10 +37,13 @@ export const PanelContent = ({ results, fetchData }) => {
               <RequestDataButton
                 secondary
                 small
-                onClick={() => fetchData(value?.id)}
+                onClick={() =>  fetchData(value?.id)}
                 style={{ marginRight: 16 }}
               >
-                Fetch details & subtasks
+                {fetchingState 
+                  ? 'Fetching...'
+                  : 'Fetch details & subtasks'
+                }                
               </RequestDataButton>
             </Fragment>
           }
