@@ -37,8 +37,8 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
                 </p>  
             }
             <ul>
-              {Object.keys(results.data).map(key => 
-                <li>{parseCamelCase(key)}: {results.data[key]}</li>
+              {Object.keys(results.data).map((key, index) => 
+                <li key={index}>{parseCamelCase(key)}: {results.data[key]}</li>
               )}
             </ul>
           </Fragment>
