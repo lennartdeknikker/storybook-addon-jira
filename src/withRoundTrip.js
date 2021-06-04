@@ -5,8 +5,13 @@ import { EVENTS } from "./constants";
 export const withRoundTrip = (storyFn) => {
   const emit = useChannel({
     [EVENTS.REQUEST]: async ({ ticketId }) => {
-      const data = ticketId ? JSON.parse(await (await fetch(`/api?ticketId=${ticketId}`)).text()) : null
-      const subTasks = data.fields.subtasks
+      let data = null
+      if (ticketId) {
+        const fetchedData = await fetch(`/api?ticketId=${ticketId}`)
+        data = await fetchedData.json()
+        console.log('🚀 ~ data', data)
+      }
+      const subTasks = data?.fields?.subtasks
       const groupedOnStatus = {
         toDo: [],
         inProgress: [],
