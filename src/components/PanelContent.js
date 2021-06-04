@@ -47,7 +47,7 @@ export const PanelContent = ({ results, fetchData }) => {
       {results.toDo.length > 0 &&
         <div
         id="toDo"
-        title={`${results.toDo.length} To do`}
+        title={`To do (${results.toDo.length})`}
         >
           <List items={results.toDo} />
         </div>
@@ -55,7 +55,7 @@ export const PanelContent = ({ results, fetchData }) => {
       {results.toDo.inProgress > 0 &&
         <div
           id="inProgress"
-          title={`${results.inProgress.length} In progress`}
+          title={`In progress (${results.inProgress.length})`}
         >
           <List items={results.inProgress} />
         </div>
@@ -63,7 +63,7 @@ export const PanelContent = ({ results, fetchData }) => {
       {results.readyForTest.length > 0 &&
         <div
           id="readyForTest"
-          title={`${results.readyForTest.length} Ready for test`}
+          title={`Ready for test (${results.readyForTest.length})`}
         >
           <List items={results.readyForTest} />
         </div>
@@ -71,7 +71,7 @@ export const PanelContent = ({ results, fetchData }) => {
       {results.done.length > 0 &&
         <div
           id="done"
-          title={`${results.done.length} Done`}
+          title={`Done (${results.done.length})`}
         >
           <List items={results.done} />
         </div>
