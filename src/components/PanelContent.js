@@ -12,10 +12,6 @@ export const RequestDataButton = styled(Button)({
 export const PanelContent = ({ results, fetchData, fetchingState }) => {
   const value = useParameter('jira', null)
 
-  useEffect(() =>{
-    console.log(results)
-  }, [results])
-
   return (
     <TabsState
       initial="overview"

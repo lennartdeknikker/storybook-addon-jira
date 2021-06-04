@@ -56,7 +56,6 @@ const Link = styled.a({
 })
 
 export const ListItem = ({ item }) => {
-console.log('🚀 ~ item', item)
   const [open, onToggle] = useState(false);
 
   return (
