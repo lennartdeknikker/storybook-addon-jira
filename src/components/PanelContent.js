@@ -44,30 +44,38 @@ export const PanelContent = ({ results, fetchData }) => {
           </Fragment>
         </Placeholder>
       </div>
-      <div
+      {results.toDo.length > 0 &&
+        <div
         id="toDo"
         title={`${results.toDo.length} To do`}
-      >
-        <List items={results.toDo} />
-      </div>
-      <div
-        id="inProgress"
-        title={`${results.inProgress.length} In progress`}
-      >
-        <List items={results.inProgress} />
-      </div>
-      <div
-        id="readyForTest"
-        title={`${results.readyForTest.length} Ready for test`}
-      >
-        <List items={results.readyForTest} />
-      </div>
-      <div
-        id="done"
-        title={`${results.done.length} Done`}
-      >
-        <List items={results.done} />
-      </div>
+        >
+          <List items={results.toDo} />
+        </div>
+      }
+      {results.toDo.inProgress > 0 &&
+        <div
+          id="inProgress"
+          title={`${results.inProgress.length} In progress`}
+        >
+          <List items={results.inProgress} />
+        </div>
+      }
+      {results.readyForTest.length > 0 &&
+        <div
+          id="readyForTest"
+          title={`${results.readyForTest.length} Ready for test`}
+        >
+          <List items={results.readyForTest} />
+        </div>
+      }
+      {results.done.length > 0 &&
+        <div
+          id="done"
+          title={`${results.done.length} Done`}
+        >
+          <List items={results.done} />
+        </div>
+      }
     </TabsState>
 )
 }
