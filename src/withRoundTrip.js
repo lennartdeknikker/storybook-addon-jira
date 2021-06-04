@@ -9,7 +9,6 @@ export const withRoundTrip = (storyFn) => {
       if (ticketId) {
         const fetchedData = await fetch(`/api?ticketId=${ticketId}`)
         data = await fetchedData.json()
-        console.log('🚀 ~ data', data)
       }
       const subTasks = data?.fields?.subtasks
       const groupedOnStatus = {
