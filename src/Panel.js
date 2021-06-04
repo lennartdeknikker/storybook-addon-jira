@@ -7,7 +7,6 @@ import { PanelContent } from "./components/PanelContent";
 export const Panel = (props) => {
   // https://storybook.js.org/docs/react/addons/addons-api#useaddonstate
   const [results, setState] = useAddonState(ADDON_ID, {
-    resultData: [],
     toDo: [],
     inProgress: [],
     readyForTest: [],

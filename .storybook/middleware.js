@@ -1,7 +1,6 @@
 const fetch = require("node-fetch");
 
 module.exports = function expressMiddleware (router) {
-  // get JIRA data here.
   router.get('/api', (req, res) => {
 
       const myHeaders = new fetch.Headers();
