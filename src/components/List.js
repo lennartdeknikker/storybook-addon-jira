@@ -51,7 +51,12 @@ const Description = styled.div({
   fontStyle: "italic",
 });
 
+const Link = styled.a({
+  marginLeft: convert(themes.normal).layoutMargin
+})
+
 export const ListItem = ({ item }) => {
+console.log('🚀 ~ item', item)
   const [open, onToggle] = useState(false);
 
   return (
@@ -67,6 +72,16 @@ export const ListItem = ({ item }) => {
             }}
           />
           {item.title}
+          <Link href={`${process.env.STORYBOOK_JIRA_BASE_URL}${item.data.key}`} target="_blank">
+            <Icon
+              icon="link"
+              size={10}
+              color={convert(themes.normal).appBorderColor}
+              style={{
+                transform: `rotate(${open ? 0 : -90}deg)`,
+              }}
+            />
+          </Link>
         </HeaderBar>
       </Wrapper>
       {open ? <Description>{item.description}</Description> : null}
