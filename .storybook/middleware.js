@@ -5,10 +5,8 @@ module.exports = function expressMiddleware (router) {
   router.get('/api', (req, res) => {
 
       const myHeaders = new fetch.Headers();
-      const authHeader = `Basic ${btoa(`${process.env?.STORYBOOK_JIRA_USERNAME}:${process.env?.STORYBOOK_JIRA_API_KEY}`)}`
-      const cookieHeader = `atlassian.xsrf.token=${process.env.STORYBOOK_ATLASSIAN_XSRF_TOKEN}`
+      const authHeader = `Basic ${Buffer.from(`${process.env?.STORYBOOK_JIRA_USERNAME}:${process.env?.STORYBOOK_JIRA_API_KEY}`).toString('base64')}`
       myHeaders.append("Authorization", authHeader);
-      // myHeaders.append("Cookie", cookieHeader);
 
       const requestOptions = {
         method: 'GET',
