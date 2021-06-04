@@ -77,9 +77,6 @@ console.log('🚀 ~ item', item)
               icon="link"
               size={10}
               color={convert(themes.normal).appBorderColor}
-              style={{
-                transform: `rotate(${open ? 0 : -90}deg)`,
-              }}
             />
           </Link>
         </HeaderBar>
