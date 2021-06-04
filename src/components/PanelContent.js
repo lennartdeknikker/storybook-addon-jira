@@ -36,13 +36,11 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
                   There's no tickets registered for this component.
                 </p>  
             }
-            <p>
-              <ul>
-                {Object.keys(results.data).map(key => 
-                  <li>{parseCamelCase(key)}: {results.data[key]}</li>
-                )}
-              </ul>
-            </p>
+            <ul>
+              {Object.keys(results.data).map(key => 
+                <li>{parseCamelCase(key)}: {results.data[key]}</li>
+              )}
+            </ul>
           </Fragment>
           {value?.id &&
             <Fragment>
