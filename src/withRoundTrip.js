@@ -3,6 +3,9 @@ import { STORY_CHANGED } from "@storybook/core-events";
 import { EVENTS } from "./constants";
 import parseData from './helpers/parseData'
 
+// something to have a look at:
+// https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-storyfn
+
 export const withRoundTrip = (storyFn) => {
   const clearData = () => {
     emit(EVENTS.RESULT, {

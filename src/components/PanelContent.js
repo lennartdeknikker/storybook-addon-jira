@@ -55,38 +55,42 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
           }
         </Placeholder>
       </div>
-      {results?.subtasks?.toDo?.length > 0 &&
         <div
         id="toDo"
-        title={`To do (${results.subtasks.toDo.length})`}
+        title={`To do (${results?.subtasks?.toDo?.length || 0})`}
         >
+          {results?.subtasks?.toDo?.length > 0 ?
           <List items={results.subtasks.toDo} />
+          : "There's no subtasks in this category"
+          }
         </div>
-      }
-      {results?.subtasks?.inProgress?.length > 0 &&
         <div
           id="inProgress"
-          title={`In progress (${results.subtasks.inProgress.length})`}
-        >
+          title={`In progress (${results?.subtasks?.inProgress?.length || 0})`}
+          >
+          {results?.subtasks?.inProgress?.length > 0 ?
           <List items={results.subtasks.inProgress} />
+          : "There's no subtasks in this category"
+          }
         </div>
-      }
-      {results?.subtasks?.readyForTest?.length > 0 &&
         <div
           id="readyForTest"
-          title={`Ready for test (${results.subtasks.readyForTest.length})`}
-        >
+          title={`Ready for test (${results?.subtasks?.readyForTest?.length || 0})`}
+          >
+          {results?.subtasks?.readyForTest?.length > 0 ?
           <List items={results.subtasks.readyForTest} />
+          : "There's no subtasks in this category"
+          }
         </div>
-      }
-      {results?.subtasks?.done?.length > 0 &&
         <div
           id="done"
-          title={`Done (${results.subtasks.done.length})`}
-        >
+          title={`Done (${results?.subtasks?.done?.length || 0})`}
+          >
+          {results?.subtasks?.done?.length > 0 ?
           <List items={results.subtasks.done} />
+          : "There's no subtasks in this category"
+          }
         </div>
-      }
     </TabsState>
 )
 }
