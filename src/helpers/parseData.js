@@ -1,3 +1,5 @@
+import parseToCamelCase from './parseToCamelCase'
+
 const parseData = (data) => {
   const parsedData = {
     overview: null,
@@ -5,16 +7,17 @@ const parseData = (data) => {
     data: data
   }
 
-  const parsedSubtasksData = {
-    toDo: [],
-    inProgress: [],
-    readyForTest: [],
-    done:[]
+  const parsedSubtasksData = {}
+
+  const getStatusKey = (subTask) => {
+    return parseToCamelCase(subTask.fields.status.name.toLowerCase())
   }
   
   const subtasksData = data?.fields?.subtasks
   for (const subTask of subtasksData) {
-    parsedSubtasksData[subTask.fields.status.name.toLowerCase()].push({
+    const statusKey = getStatusKey(subTask)
+    if (!parsedSubtasksData[statusKey]) parsedSubtasksData[statusKey] = []
+    parsedSubtasksData[statusKey].push({
       title: subTask.key,
       description: subTask.fields.summary,
       data: subTask

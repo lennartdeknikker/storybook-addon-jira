@@ -6,7 +6,7 @@ export default {
   component: Button,
   parameters: {
     jira: {
-      id: 'RING-123'
+      id: 'RING-1020'
     }
   },
 };
