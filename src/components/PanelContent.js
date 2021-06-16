@@ -4,7 +4,7 @@ import { TabsState, Placeholder, Button } from "@storybook/components";
 import { List } from "./List";
 import { useParameter } from '@storybook/api'
 import parseCamelCaseToString from '../helpers/parseCamelCaseToString'
-import parseToCamelCase from "../helpers/parseToCamelCase";
+import getStatusKeys from "../helpers/getStatusKeys"
 
 export const RequestDataButton = styled(Button)({
   marginTop: "1rem",
@@ -13,22 +13,9 @@ export const RequestDataButton = styled(Button)({
 export const PanelContent = ({ results, fetchData, fetchingState }) => {
   
   const jiraSettings = useParameter('jira', {})
-  console.log(jiraSettings.statusOptions)
-
   useEffect(() => fetchData(jiraSettings?.id), [jiraSettings?.id])
   
-  const getStatusLabels = (subtasks, persistentStatusOptions) => {
-    if (subtasks && persistentStatusOptions) {
-      const labels = Object.keys(subtasks)
-      for (const option of persistentStatusOptions) {
-        labels.push(parseToCamelCase(option))
-      }
-      return [...new Set(labels)]
-    }
-    return null
-  }
-  const statusLabels = getStatusLabels(results?.subtasks, jiraSettings?.statusOptions)
-  console.log('🚀 ~ statusLabels', statusLabels)
+  const statusKeys = getStatusKeys(results?.subtasks, jiraSettings?.persistentStatusOptions)
 
   return (
     <TabsState
@@ -74,11 +61,13 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
         </Placeholder>
       </div>
       
-      {/* { statusLabels.map(statusLabel => {
-        const subtasks = results?.subtasks?.[statusLabel]
+      { statusKeys && statusKeys.map((statusKey, index) => {
+        const subtasks = results?.subtasks?.[statusKey]
+        const statusLabel = parseCamelCaseToString(statusKey)
         return (
           <div
-          id={statusLabel}
+          key={index}
+          id={statusKey}
           title={`${statusLabel} (${subtasks?.length || 0})`}
           >
             {subtasks?.length > 0 ?
@@ -88,44 +77,7 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
           </div>
         )
       })
-
-      } */}
-      <div
-      id="toDo"
-      title={`To do (${results?.subtasks?.toDo?.length || 0})`}
-      >
-        {results?.subtasks?.toDo?.length > 0 ?
-        <List items={results.subtasks.toDo} />
-        : "There's no subtasks in this category"
-        }
-      </div>
-      <div
-        id="inProgress"
-        title={`In progress (${results?.subtasks?.inProgress?.length || 0})`}
-        >
-        {results?.subtasks?.inProgress?.length > 0 ?
-        <List items={results.subtasks.inProgress} />
-        : "There's no subtasks in this category"
-        }
-      </div>
-      <div
-        id="readyForTest"
-        title={`Ready for test (${results?.subtasks?.readyForTest?.length || 0})`}
-        >
-        {results?.subtasks?.readyForTest?.length > 0 ?
-        <List items={results.subtasks.readyForTest} />
-        : "There's no subtasks in this category"
-        }
-      </div>
-      <div
-        id="done"
-        title={`Done (${results?.subtasks?.done?.length || 0})`}
-        >
-        {results?.subtasks?.done?.length > 0 ?
-        <List items={results.subtasks.done} />
-        : "There's no subtasks in this category"
-        }
-      </div>
+      }
     </TabsState>
 )
 }
