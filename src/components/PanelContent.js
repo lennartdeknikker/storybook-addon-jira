@@ -10,7 +10,10 @@ export const RequestDataButton = styled(Button)({
 });
 
 export const PanelContent = ({ results, fetchData, fetchingState }) => {
-  const value = useParameter('jira', null)
+  
+  const value = useParameter('jira', 'test')
+
+  useEffect(() => fetchData(value?.id), [value?.id])
 
   return (
     <TabsState
@@ -48,7 +51,7 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
               >
                 {fetchingState 
                   ? 'Fetching...'
-                  : 'Fetch details & subtasks'
+                  : 'Refresh'
                 }                
               </RequestDataButton>
             </Fragment>

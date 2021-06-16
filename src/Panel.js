@@ -22,15 +22,17 @@ export const Panel = (props) => {
     },
   });
 
+  const fetchData = (ticketId) => {
+    setFetchingState(true)
+    emit(EVENTS.REQUEST, {ticketId: ticketId})
+  }
+
   return (
     <AddonPanel {...props}>
       <PanelContent
         fetchingState={fetchingState}
         results={results}
-        fetchData={(ticketId) => {
-          setFetchingState(true)
-          emit(EVENTS.REQUEST, {ticketId: ticketId})
-        }}
+        fetchData={fetchData}
         clearData={() => emit(EVENTS.CLEAR)}
       />
     </AddonPanel>
