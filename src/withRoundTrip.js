@@ -1,7 +1,7 @@
 import { useChannel } from "@storybook/client-api";
 import { STORY_CHANGED } from "@storybook/core-events";
 import { EVENTS } from "./constants";
-import parseData from './helpers/parseData'
+import parseTicketData from './helpers/parseTicketData'
 
 // something to have a look at:
 // https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-storyfn
@@ -22,7 +22,7 @@ export const withRoundTrip = (storyFn) => {
         const fetchedData = await fetch(`/api?ticketId=${ticketId}`)
         data = await fetchedData.json()
       }
-      const parsedData = parseData(data)
+      const parsedData = parseTicketData(data)
 
       emit(EVENTS.RESULT, parsedData);
     },

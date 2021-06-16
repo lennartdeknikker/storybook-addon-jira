@@ -1,6 +1,6 @@
 import parseToCamelCase from './parseToCamelCase'
 
-const parseData = (data) => {
+const parseTicketData = (data) => {
   const parsedData = {
     overview: null,
     subtasks: null,
@@ -38,4 +38,4 @@ const parseData = (data) => {
   return parsedData
 }
 
-export default parseData
+export default parseTicketData
