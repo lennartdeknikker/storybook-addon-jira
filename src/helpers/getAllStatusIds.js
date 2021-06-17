@@ -6,7 +6,7 @@ import parseToCamelCase from "./parseToCamelCase";
       for (const category of persistentCategories) {
         labels.push(parseToCamelCase(category))
       }
-      return [...new Set(labels)]
+      return [...new Set(labels)].reverse()
     }
     return null
   }
