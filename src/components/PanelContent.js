@@ -38,9 +38,11 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
                 </p>  
             }
             <ul>
-              {/* {Object.keys(results.overview).map((key, index) => 
+              {Object.keys(results.overview).map((key, index) =>
+                typeof results.overview[key] === 'string' ?
                 <li key={index}>{parseCamelCaseToString(key)}: {results.overview[key]}</li>
-              )} */}
+                : <li key={index}>{key}</li>
+              )}
             </ul>
           </Fragment>
           {jiraSettings?.id &&
