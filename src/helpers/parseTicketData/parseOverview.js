@@ -1,13 +1,14 @@
-import getPercentagesFromSubtasks from './parseOverview/getPercentagesFromSubtasks'
+import getProgressFromParsedSubtasks from './parseOverview/getProgressFromParsedSubtasks'
 import parseComments from './parseOverview/parseComments'
 
 const parseOverview = (data, parsedSubtasks) => {
   return {
+    ticketId: data?.fields?.key,
     status: {
-      name: data?.fields?.status?.name,
+      label: data?.fields?.status?.name,
       color: data?.fields?.status?.statusCategory?.colorName,
-      percentages: getPercentagesFromSubtasks(parsedSubtasks)
     },
+    subtasksProgress: getProgressFromParsedSubtasks(parsedSubtasks),
     lastUpdated: new Date(data?.fields?.updated).toDateString(),
     created: new Date(data?.fields?.created).toDateString(),
     assignedTo:data?.fields?.assignee.displayName,

@@ -18,20 +18,16 @@ const parseSubtasks = (data) => {
     if (!parsedSubtasks.categories[statusId]) parsedSubtasks.categories[statusId] = {
       color: subtask.fields.status.statusCategory.colorName,
       amount: 0,
-      percentage: 0,
       items: []
     }
 
     // update amount of subtasks for this status category
     parsedSubtasks.categories[statusId].amount++
-
-    // recalculate category percentage of total amount of subtasks
-    parsedSubtasks.categories[statusId].percentage = (100 / parsedSubtasks.amount) * parsedSubtasks.categories[statusId].amount
     
     // add subtask to category
     parsedSubtasks.categories[statusId].items.push({
-      title: subtask.key,
-      description: subtask.fields.summary,
+      id: subtask.key,
+      summary: subtask.fields.summary,
       data: subtask
     })
   }

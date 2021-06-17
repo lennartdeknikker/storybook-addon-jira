@@ -70,7 +70,7 @@ export const ListItem = ({ item }) => {
               transform: `rotate(${open ? 0 : -90}deg)`,
             }}
           />
-          {item.title}
+          {item.id}
           <Link href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${item.data.key}`} target="_blank">
             <Icon
               icon="link"
@@ -80,7 +80,7 @@ export const ListItem = ({ item }) => {
           </Link>
         </HeaderBar>
       </Wrapper>
-      {open ? <Description>{item.description}</Description> : null}
+      {open ? <Description>{item.summary}</Description> : null}
     </Fragment>
   );
 };
