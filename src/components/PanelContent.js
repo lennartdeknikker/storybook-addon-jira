@@ -4,7 +4,7 @@ import { TabsState, Placeholder, Button } from '@storybook/components';
 import { useParameter } from '@storybook/api'
 import getAllStatusIds from '../helpers/getAllStatusIds'
 import List from './List'
-import parseCamelCaseToString from '../helpers/parseCamelCaseToString'
+import { parseCamelCaseToString } from '../helpers/parseCamelCase'
 
 export const RequestDataButton = styled(Button)({
   marginTop: '1rem',

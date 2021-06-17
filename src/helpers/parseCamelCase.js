@@ -1,3 +1,10 @@
+const parseCamelCaseToString = (string) => {
+  const withSpaces = string.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+  const lowerCased = withSpaces.toLowerCase()
+  const withFirstLetterCapitalized = lowerCased.charAt(0).toUpperCase() + lowerCased.slice(1);
+  return withFirstLetterCapitalized
+}
+
 // https://gist.github.com/Jagathishrex/f4b57d77a093b7a5614db0f95c5e5060
 
 // util function to convert the input to string type
@@ -38,4 +45,4 @@ const parseToCamelCase = (input) => {
   return toCamelCase(words)
 }
 
-export default parseToCamelCase
+export { parseCamelCaseToString, parseToCamelCase }

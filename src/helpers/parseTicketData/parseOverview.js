@@ -1,4 +1,4 @@
-import getPercentagesFromSubtasks from './getPercentagesFromSubtasks'
+import getPercentagesFromSubtasks from './parseOverview/getPercentagesFromSubtasks'
 
 const parseOverview = (data, parsedSubtasks) => {
   return {

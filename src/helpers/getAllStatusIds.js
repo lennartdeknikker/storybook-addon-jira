@@ -1,4 +1,4 @@
-import parseToCamelCase from "./parseToCamelCase";
+import { parseToCamelCase } from "./parseCamelCase";
 
   const getAllStatusIds = (subtasksCategories, persistentCategories) => {
     if (subtasksCategories && persistentCategories) {

@@ -1,4 +1,4 @@
-import getStatusId from '../getStatusId'
+import { parseToCamelCase } from '../parseCamelCase'
 
 const parseSubtasks = (data) => {
   // create subtasks object
@@ -12,7 +12,7 @@ const parseSubtasks = (data) => {
 
   for (const subtask of data?.fields?.subtasks) {
     // pull status from subtask and parse to statusId
-    const statusId = getStatusId(subtask)
+    const statusId = parseToCamelCase(subtask.fields.status.name)
 
     // use statusId to create the category if it does not exist yet.
     if (!parsedSubtasks.categories[statusId]) parsedSubtasks.categories[statusId] = {
