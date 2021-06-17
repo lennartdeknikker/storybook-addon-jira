@@ -28,7 +28,7 @@ const parseSubtasks = (data) => {
     parsedSubtasks.categories[statusId].items.push({
       id: subtask.key,
       summary: subtask.fields.summary,
-      data: subtask
+      apiLink: subtask.self
     })
   }
     
