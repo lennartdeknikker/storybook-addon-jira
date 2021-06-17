@@ -65,6 +65,7 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
       
       { statusIds && statusIds.map((statusId, index) => {
         const tabSubtasks = results?.subtasks?.categories?.[statusId]?.items
+        console.log('🚀 ~ tabSubtasks', tabSubtasks)
         const tabLabel = parseCamelCaseToString(statusId)
         return (
           <div
@@ -73,7 +74,7 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
           title={`${tabLabel} (${tabSubtasks?.length || 0})`}
           >
             {tabSubtasks?.length > 0 ?
-            <List items={tabSubtasks} />
+            <List tabSubtasks={tabSubtasks} />
             : "There's no subtasks in this category"
             }
           </div>

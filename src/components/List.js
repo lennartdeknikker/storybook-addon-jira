@@ -55,7 +55,7 @@ const Link = styled.a({
   marginLeft: convert(themes.normal).layoutMargin
 })
 
-export const ListItem = ({ item }) => {
+export const ListItem = ({ tabSubtask }) => {
   const [open, onToggle] = useState(false);
 
   return (
@@ -70,8 +70,8 @@ export const ListItem = ({ item }) => {
               transform: `rotate(${open ? 0 : -90}deg)`,
             }}
           />
-          {item.id}
-          <Link href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${item.data.key}`} target="_blank">
+          {tabSubtask.id}
+          <Link href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${tabSubtask.id}`} target="_blank">
             <Icon
               icon="link"
               size={10}
@@ -80,15 +80,15 @@ export const ListItem = ({ item }) => {
           </Link>
         </HeaderBar>
       </Wrapper>
-      {open ? <Description>{item.summary}</Description> : null}
+      {open ? <Description>{tabSubtask.summary}</Description> : null}
     </Fragment>
   );
 };
 
-const List = ({ items }) => (
+const List = ({ tabSubtasks }) => (
   <ListWrapper>
-    {items.map((item, idx) => (
-      <ListItem key={idx} item={item}></ListItem>
+    {tabSubtasks.map((tabSubtask, id) => (
+      <ListItem key={id} tabSubtask={tabSubtask}></ListItem>
     ))}
   </ListWrapper>
 );
