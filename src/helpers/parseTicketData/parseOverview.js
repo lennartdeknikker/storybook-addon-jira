@@ -12,6 +12,7 @@ const parseOverview = (data, parsedSubtasks) => {
     created: new Date(data?.fields?.created).toDateString(),
     assignedTo:data?.fields?.assignee.displayName,
     summary: data?.fields?.summary,
+    description: data?.fields?.description,
     priority: data?.fields?.priority.name,
     reporter: data?.fields?.reporter?.displayName,
     comments: parseComments(data?.fields?.comment?.comments)
