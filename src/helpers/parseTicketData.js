@@ -17,6 +17,7 @@ const parseTicketData = (data) => {
 
     // use statusId to create the category if it does not exist yet.
     if (!subtasks.categories[StatusId]) subtasks.categories[StatusId] = {
+      color: subTask.fields.status.statusCategory.colorName,
       amount: 0,
       percentage: 0,
       items: []
