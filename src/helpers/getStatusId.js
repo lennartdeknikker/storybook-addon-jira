@@ -1,7 +1,7 @@
 import parseToCamelCase from './parseToCamelCase'
 
-const getStatusKey = (subTask) => {
+const getStatusId = (subTask) => {
   return parseToCamelCase(subTask.fields.status.name.toLowerCase())
 }
 
-export default getStatusKey
+export default getStatusId

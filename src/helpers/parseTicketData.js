@@ -1,41 +1,57 @@
-import getStatusKey from './getStatusKey'
+import getStatusId from './getStatusId'
 
 const parseTicketData = (data) => {
 
+  // create subtasks object
   const subtasks = {
-    amount: 0
+    amount: 0,
+    categories: {}
   }
+
+  // calculate total amount of subtasks
+  subtasks.amount = data?.fields?.subtasks.length
+
   for (const subTask of data?.fields?.subtasks) {
-    subtasks.amount++
-    const statusKey = getStatusKey(subTask)
-    if (!subtasks[statusKey]) subtasks[statusKey] = []
-    subtasks[statusKey].push({
+    // pull status from subtask and parse to statusId
+    const StatusId = getStatusId(subTask)
+
+    // use statusId to create the category if it does not exist yet.
+    if (!subtasks.categories[StatusId]) subtasks.categories[StatusId] = {
+      amount: 0,
+      percentage: 0,
+      items: []
+    }
+
+    // update amount of subtasks for this status category
+    subtasks.categories[StatusId].amount++
+
+    // recalculate category percentage of total amount of subtasks
+    subtasks.categories[StatusId].percentage = (100 / subtasks.amount) * subtasks.categories[StatusId].amount
+
+    // add subtask to category
+    subtasks.categories[StatusId].items.push({
       title: subTask.key,
       description: subTask.fields.summary,
       data: subTask
     })
   }
 
-  const getPercentages = () => {
-    const percentages = {}
-    for (let statusKey in subtasks) {
-      if (!percentages[statusKey]) percentages[statusKey] = {
-        amount: subtasks[statusKey].length
-      }
-      percentages[statusKey].percentage = (100 / subtasks.amount) * percentages[statusKey].amount
+  const getPercentagesFromSubtasks = () => {
+    const percentages = []
+    for (let item in subtasks.categories) {
+      percentages.push({
+        id: item,
+        percentage: subtasks.categories[item].percentage
+      })
     }
     return percentages
   }
-
-  subtasks.percentages = getPercentages()
 
   const overview = {
     status: {
       name: data?.fields?.status?.name,
       color: data?.fields?.status?.statusCategory?.colorName,
-      percentages: [
-        
-      ]
+      percentages: getPercentagesFromSubtasks()
     },
     lastUpdated: new Date(data?.fields?.updated).toDateString(),
     created: new Date(data?.fields?.created).toDateString(),

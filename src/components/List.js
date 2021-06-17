@@ -85,10 +85,12 @@ export const ListItem = ({ item }) => {
   );
 };
 
-export const List = ({ items }) => (
+const List = ({ items }) => (
   <ListWrapper>
     {items.map((item, idx) => (
       <ListItem key={idx} item={item}></ListItem>
     ))}
   </ListWrapper>
 );
+
+export default List

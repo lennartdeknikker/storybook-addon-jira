@@ -1,13 +1,13 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { styled, themes, convert } from "@storybook/theming";
-import { TabsState, Placeholder, Button } from "@storybook/components";
-import { List } from "./List";
+import React, { Fragment, useEffect } from 'react';
+import { styled, themes, convert } from '@storybook/theming';
+import { TabsState, Placeholder, Button } from '@storybook/components';
 import { useParameter } from '@storybook/api'
+import getAllStatusIds from '../helpers/getAllStatusIds'
+import List from './List'
 import parseCamelCaseToString from '../helpers/parseCamelCaseToString'
-import getStatusKeys from "../helpers/getStatusKeys"
 
 export const RequestDataButton = styled(Button)({
-  marginTop: "1rem",
+  marginTop: '1rem',
 });
 
 export const PanelContent = ({ results, fetchData, fetchingState }) => {
@@ -15,7 +15,8 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
   const jiraSettings = useParameter('jira', {})
   useEffect(() => fetchData(jiraSettings?.id), [jiraSettings?.id])
   
-  const statusKeys = getStatusKeys(results?.subtasks, jiraSettings?.persistentStatusOptions)
+  const statusIds = getAllStatusIds(results?.subtasks.categories, jiraSettings?.persistentTabs)
+  console.log('🚀 ~ statusIds', statusIds)
 
   return (
     <TabsState
@@ -61,17 +62,17 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
         </Placeholder>
       </div>
       
-      { statusKeys && statusKeys.map((statusKey, index) => {
-        const subtasks = results?.subtasks?.[statusKey]
-        const statusLabel = parseCamelCaseToString(statusKey)
+      { statusIds && statusIds.map((statusId, index) => {
+        const tabSubtasks = results?.subtasks?.categories?.[statusId]?.items
+        const tabLabel = parseCamelCaseToString(statusId)
         return (
           <div
-          key={index}
-          id={statusKey}
-          title={`${statusLabel} (${subtasks?.length || 0})`}
+          key={`${index}`}
+          id={statusId}
+          title={`${tabLabel} (${tabSubtasks?.length || 0})`}
           >
-            {subtasks?.length > 0 ?
-            <List items={subtasks} />
+            {tabSubtasks?.length > 0 ?
+            <List items={tabSubtasks} />
             : "There's no subtasks in this category"
             }
           </div>

@@ -13,7 +13,7 @@ import { withRoundTrip } from "../withRoundTrip";
 export const decorators = [withRoundTrip];
 
 export const parameters = {
-  jira: { persistentStatusOptions: [
-    'To do', 'In progress', 'Ready for review', 'done', 'on hold'
+  jira: { persistentTabs: [
+    'To do', 'In progress', 'Done'
   ] }
 }
