@@ -47,7 +47,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
   const StatusLabel = styled.span({
     display: 'block',
     padding: '10px',
-    backgroundColor: 'var(--statusColor)',
+    backgroundColor: mapJiraColor(overviewResults?.status?.color),
     color: 'white',
     width: 'fit-content',
     borderRadius: '5px',
@@ -58,7 +58,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
   return (
     <Placeholder>
       <OverviewContainer>
-        <OverviewHeader style={{'--statusColor': mapJiraColor(overviewResults?.status?.color)}}>
+        <OverviewHeader>
           <TicketLink href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${jiraSettings.id}`} target="_blank">
             <TicketTitle>
               <strong>{jiraSettings.id}: </strong>{overviewResults.summary || ''}
