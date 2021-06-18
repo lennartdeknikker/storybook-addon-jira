@@ -30,9 +30,14 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     fontSize: '1.2rem',
     marginBottom: '15px'
   })
+
+  const OverviewContainer = styled.div({
+    textAlign: 'left'
+  })
+  
   return (
     <Placeholder>
-      <Fragment>
+      <OverviewContainer>
         {jiraSettings?.id ?
           <TicketLink href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${jiraSettings.id}`} target="_blank">
             <TicketTitle>
@@ -67,7 +72,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
           }                
         </RequestDataButton>
       }
-      </Fragment>
+      </OverviewContainer>
     </Placeholder>
   )
 }

@@ -36,7 +36,8 @@ const ProgressBar = ({subtasksProgress}) => {
 
   const ProgressBarLabel = styled.span({
     width: '80px',
-    fontSize: '.5rem'
+    fontSize: '.5rem',
+    paddingLeft: '10px'
   })
   
   const ProgressBarContainer = styled.div({

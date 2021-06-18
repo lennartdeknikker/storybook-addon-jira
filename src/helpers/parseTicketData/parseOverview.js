@@ -3,7 +3,7 @@ import parseComments from './parseOverview/parseComments'
 
 const parseOverview = (data, parsedSubtasks) => {
   return {
-    ticketId: data?.fields?.key,
+    ticketId: data?.key,
     status: {
       label: data?.fields?.status?.name,
       color: data?.fields?.status?.statusCategory?.colorName,
