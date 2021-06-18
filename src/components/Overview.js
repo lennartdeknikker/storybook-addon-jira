@@ -18,7 +18,10 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
           </p>
         : <p>
             There's no tickets registered for this component.
-          </p>  
+          </p>
+      }
+      {overviewResults.subtasksProgress &&
+        overviewResults.subtasksProgress[0].percentage
       }
       <ul>
         {Object.keys(overviewResults).map((key, index) =>

@@ -3,7 +3,8 @@ const getProgressFromParsedSubtasks = (parsedSubtasks) => {
   for (let statusId in parsedSubtasks.categories) {
     percentages.push({
       id: statusId,
-      percentage: (100 / parsedSubtasks.amount) * parsedSubtasks.categories[statusId].amount
+      percentage: (100 / parsedSubtasks.amount) * parsedSubtasks.categories[statusId].amount,
+      color: parsedSubtasks.categories[statusId].color
     })
   }
   return percentages
