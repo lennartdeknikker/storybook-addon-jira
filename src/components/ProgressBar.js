@@ -1,14 +1,41 @@
 import React from 'react';
+import { styled, themes, convert } from "@storybook/theming";
+
+const createProgressBarCssVariables = (subtasksProgress) => {
+  const cssVariables = {}
+  for (let subtaskProgress of subtasksProgress) {
+    cssVariables[`--${subtaskProgress.id}`] = `${subtaskProgress.percentage}%`
+  }
+  return cssVariables
+}
+
 const ProgressBar = ({subtasksProgress}) => {
-console.log('🚀 ~ subtasksProgress', subtasksProgress)
+  console.log('🚀 ~ subtasksProgress', subtasksProgress)
+
+  const ProgressBarWrapper = styled.div({
+    ...createProgressBarCssVariables(subtasksProgress),
+    display: 'flex',
+    flexDirection: 'row-reverse'
+  })
+
+  const ProgressBarPart = styled.div({
+    backgroundColor: 'blue'
+  })
 
   return (
-    <div className="ProgressBar">
-      test
+    <ProgressBarWrapper>
       {subtasksProgress.map((subtaskProgress, index) => {
-        return <div key={index} className={`ProgressBar-${subtaskProgress.id}`}>{subtaskProgress.id}</div>
+        return (
+        <ProgressBarPart 
+        key={index} 
+        className={`ProgressBar-${subtaskProgress.id}`}
+        style={{width: `var(--${subtaskProgress.id})`}}
+        >
+          {subtaskProgress.id}
+        </ProgressBarPart>
+        )
       })}
-    </div>
+    </ProgressBarWrapper>
   )
 }
 
