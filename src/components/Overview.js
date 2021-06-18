@@ -1,22 +1,45 @@
 import React, { Fragment } from 'react';
 import { Placeholder, Button } from '@storybook/components';
-import { styled } from '@storybook/theming';
+import { styled, themes, convert } from "@storybook/theming";
 import { parseCamelCaseToString } from '../helpers/parseCamelCase'
 import ProgressBar from './ProgressBar';
+import { Icons } from "@storybook/components";
 
 export const RequestDataButton = styled(Button)({
   marginTop: '1rem',
 });
 
+const Icon = styled(Icons)({
+  height: '12px',
+  width: '12px',
+  marginLeft: '5px',
+  alignSelf: "center",
+  display: "inline-flex",
+});
 
 const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => {
+  const TicketLink = styled.a({
+    color: convert(themes.normal).color.dark,
+    textDecoration: 'none',
+    ":hover": {
+      color: convert(themes.normal).color.darkest,
+    }
+  })
+
+  const TicketTitle = styled.h1({
+    fontSize: '1.2rem',
+    marginBottom: '15px'
+  })
   return (
     <Placeholder>
       <Fragment>
-        {jiraSettings?.id
-        ? <p>Main ticket:
-            <a href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${jiraSettings.id}`} target="_blank"> {jiraSettings.id}</a>
-          </p>
+        {jiraSettings?.id ?
+          <TicketLink href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${jiraSettings.id}`} target="_blank">
+            <TicketTitle>
+              <strong>{jiraSettings.id}: </strong>{overviewResults.summary || ''}
+              <Icon icon="link" />
+            </TicketTitle>
+          </TicketLink>
         : <p>
             There's no tickets registered for this component.
           </p>

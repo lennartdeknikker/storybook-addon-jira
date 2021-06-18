@@ -24,29 +24,45 @@ const ProgressBar = ({subtasksProgress}) => {
     ...createProgressBarCssVariables(subtasksProgress),
     display: 'flex',
     borderRadius: '5px',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    width: 'calc(100% - 80px)',
+    height: '10px'
   })
 
   const ProgressBarPart = styled.div({
     backgroundColor: 'blue',
-    height: '10px'
+    height: '100%'
+  })
+
+  const ProgressBarLabel = styled.span({
+    width: '80px',
+    fontSize: '.5rem'
+  })
+  
+  const ProgressBarContainer = styled.div({
+    display: 'flex'
   })
 
   return (
-    <ProgressBarWrapper>
-      {subtasksProgress.map((subtaskProgress, index) => {
-        return (
-        <ProgressBarPart 
-        key={index} 
-        className={`ProgressBar-${subtaskProgress.id}`}
-        style={{
-          width: `var(--${subtaskProgress.id}-width)`,
-          backgroundColor: `var(--${subtaskProgress.id}-color)`
-        }}
-        />
-        )
-      })}
-    </ProgressBarWrapper>
+    <ProgressBarContainer>
+      <ProgressBarWrapper>
+        {subtasksProgress.map((subtaskProgress, index) => {
+          return (
+          <ProgressBarPart 
+          key={index} 
+          className={`ProgressBar-${subtaskProgress.id}`}
+          style={{
+            width: `var(--${subtaskProgress.id}-width)`,
+            backgroundColor: `var(--${subtaskProgress.id}-color)`
+          }}
+          />
+          )
+        })}
+      </ProgressBarWrapper>
+      <ProgressBarLabel>
+        {subtasksProgress[0].percentage}% {subtasksProgress[0].id}
+      </ProgressBarLabel>
+    </ProgressBarContainer>
   )
 }
 
