@@ -1,11 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Placeholder, Button } from '@storybook/components';
 import { styled, themes, convert } from "@storybook/theming";
 import { parseCamelCaseToString } from '../helpers/parseCamelCase'
+import parseAtlassianDocFormatToMarkDown from '../helpers/parseAtlassianDocFormatToMarkDown'
 import ProgressBar from './ProgressBar';
 import { Icons } from "@storybook/components";
 import mapJiraColor from '../helpers/mapJiraColor';
+import nmd from 'nano-markdown'
 
+console.log(nmd('test'))
 export const RequestDataButton = styled(Button)({
   marginTop: '1rem',
 });
@@ -42,8 +45,6 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     textAlign: 'left'
   })
 
-  console.log(overviewResults?.status?.color, 'test')
-
   const StatusLabel = styled.span({
     display: 'block',
     padding: '10px',
@@ -54,6 +55,21 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     height: 'fit-content',
     margin: '0 0 10px 10px'
   })
+
+  const Description = styled.p({
+    display: 'block',
+    fontWeight: 300,
+    borderRadius: '5px',
+    a: {
+      color: convert(themes.normal).color.darkest,
+    },
+    padding: '10px',
+    backgroundColor: convert(themes.normal).color.light,
+  })
+
+  const descriptionAdfString = overviewResults?.description || ''
+  const descriptionMarkdownString = parseAtlassianDocFormatToMarkDown(descriptionAdfString)
+  const descriptionHtmlString = nmd(descriptionMarkdownString)
 
   return (
     <Placeholder>
@@ -68,6 +84,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
           <StatusLabel>{overviewResults?.status?.label}</StatusLabel>
           {overviewResults?.subtasksProgress && <ProgressBar subtasksProgress={overviewResults.subtasksProgress} />}
         </OverviewHeader>
+        {overviewResults?.description && <Description dangerouslySetInnerHTML={{__html: descriptionHtmlString}} />}
       <ul>
         {Object.keys(overviewResults).map((key, index) =>
           typeof overviewResults[key] === 'string' ?
