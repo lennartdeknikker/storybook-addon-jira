@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Placeholder, Button } from '@storybook/components';
 import { styled } from '@storybook/theming';
 import { parseCamelCaseToString } from '../helpers/parseCamelCase'
+import ProgressBar from './ProgressBar';
 
 export const RequestDataButton = styled(Button)({
   marginTop: '1rem',
@@ -21,7 +22,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
           </p>
       }
       {overviewResults.subtasksProgress &&
-        overviewResults.subtasksProgress[0].percentage
+        <ProgressBar subtasksProgress={overviewResults.subtasksProgress} />
       }
       <ul>
         {Object.keys(overviewResults).map((key, index) =>
