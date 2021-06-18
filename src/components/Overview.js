@@ -4,6 +4,7 @@ import { styled, themes, convert } from "@storybook/theming";
 import { parseCamelCaseToString } from '../helpers/parseCamelCase'
 import ProgressBar from './ProgressBar';
 import { Icons } from "@storybook/components";
+import mapJiraColor from '../helpers/mapJiraColor';
 
 export const RequestDataButton = styled(Button)({
   marginTop: '1rem',
@@ -18,9 +19,15 @@ const Icon = styled(Icons)({
 });
 
 const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => {
+  const OverviewHeader = styled.div({
+    display: 'flex',
+    flexWrap: 'wrap'
+  })
+
   const TicketLink = styled.a({
     color: convert(themes.normal).color.dark,
     textDecoration: 'none',
+    flex: 1,
     ":hover": {
       color: convert(themes.normal).color.darkest,
     }
@@ -34,24 +41,33 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
   const OverviewContainer = styled.div({
     textAlign: 'left'
   })
-  
+
+  console.log(overviewResults?.status?.color, 'test')
+
+  const StatusLabel = styled.span({
+    display: 'block',
+    padding: '10px',
+    backgroundColor: 'var(--statusColor)',
+    color: 'white',
+    width: 'fit-content',
+    borderRadius: '5px',
+    height: 'fit-content',
+    margin: '0 0 10px 10px'
+  })
+
   return (
     <Placeholder>
       <OverviewContainer>
-        {jiraSettings?.id ?
+        <OverviewHeader style={{'--statusColor': mapJiraColor(overviewResults?.status?.color)}}>
           <TicketLink href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${jiraSettings.id}`} target="_blank">
             <TicketTitle>
               <strong>{jiraSettings.id}: </strong>{overviewResults.summary || ''}
               <Icon icon="link" />
             </TicketTitle>
           </TicketLink>
-        : <p>
-            There's no tickets registered for this component.
-          </p>
-      }
-      {overviewResults.subtasksProgress &&
-        <ProgressBar subtasksProgress={overviewResults.subtasksProgress} />
-      }
+          <StatusLabel>{overviewResults?.status?.label}</StatusLabel>
+          {overviewResults?.subtasksProgress && <ProgressBar subtasksProgress={overviewResults.subtasksProgress} />}
+        </OverviewHeader>
       <ul>
         {Object.keys(overviewResults).map((key, index) =>
           typeof overviewResults[key] === 'string' ?

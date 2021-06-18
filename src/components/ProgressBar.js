@@ -1,31 +1,31 @@
 import React from 'react';
 import { styled, themes, convert } from "@storybook/theming";
+import mapJiraColor from '../helpers/mapJiraColor'
 
 const createProgressBarCssVariables = (subtasksProgress) => {
   const cssVariables = {}
   // Add percentages of progressbarParts for widths.
   for (let subtaskProgress of subtasksProgress) {
     cssVariables[`--${subtaskProgress.id}-width`] = `${subtaskProgress.percentage}%`
-    cssVariables[`--${subtaskProgress.id}-color`] = mapColor(subtaskProgress.color)
+    cssVariables[`--${subtaskProgress.id}-color`] = mapJiraColor(subtaskProgress.color)
   }
   return cssVariables
 }
 
-const mapColor = (color) => {
-  if (color === 'yellow') return '#0052cc'
-  if (color === 'green') return '#36b37e'
-  return '#ebecf0'
-}
-
 const ProgressBar = ({subtasksProgress}) => {
   console.log('🚀 ~ subtasksProgress', subtasksProgress)
+
+  const ProgressBarContainer = styled.div({
+    display: 'flex',
+    width: '100%'
+  })
 
   const ProgressBarWrapper = styled.div({
     ...createProgressBarCssVariables(subtasksProgress),
     display: 'flex',
     borderRadius: '5px',
     overflow: 'hidden',
-    width: 'calc(100% - 80px)',
+    flex: 1,
     height: '10px'
   })
 
@@ -35,19 +35,15 @@ const ProgressBar = ({subtasksProgress}) => {
   })
 
   const ProgressBarLabel = styled.span({
-    width: '80px',
+    width: 'fit-content',
     fontSize: '.5rem',
     paddingLeft: '10px'
   })
   
-  const ProgressBarContainer = styled.div({
-    display: 'flex'
-  })
-
   return (
     <ProgressBarContainer>
       <ProgressBarWrapper>
-        {subtasksProgress.map((subtaskProgress, index) => {
+        {subtasksProgress?.map((subtaskProgress, index) => {
           return (
           <ProgressBarPart 
           key={index} 
