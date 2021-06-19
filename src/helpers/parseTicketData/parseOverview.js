@@ -12,7 +12,7 @@ const parseOverview = (data, parsedSubtasks) => {
     lastUpdated: new Date(data?.fields?.updated).toDateString(),
     created: new Date(data?.fields?.created).toDateString(),
     assignedTo: {
-      name: data?.fields?.assignee.displayName,
+      name: data?.fields?.assignee?.displayName,
       avatar: data?.fields?.assignee?.avatarUrls['48x48']
     },
     summary: data?.fields?.summary,
