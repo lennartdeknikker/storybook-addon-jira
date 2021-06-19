@@ -137,30 +137,42 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
           <PropertyBar>
             <HeaderItem>
               Reporter:
-              <AvatarImage src={overviewResults?.reporter?.avatar} alt={overviewResults?.reporter?.name} />
+              {overviewResults?.reporter?.avatar ?
+                <AvatarImage src={overviewResults.reporter.avatar} alt={overviewResults.reporter?.name} />
+                : <HeaderItemValue>{overviewResults?.reporter?.name}</HeaderItemValue>
+              }
             </HeaderItem>
             <HeaderItem>
               Assigned to:
-              <AvatarImage src={overviewResults?.assignedTo?.avatar} alt={overviewResults?.assignedTo?.name} />
+              {overviewResults?.assignedTo?.avatar ?
+                <AvatarImage src={overviewResults.assignedTo.avatar} alt={overviewResults.assignedTo?.name} />
+                : <HeaderItemValue>{overviewResults?.assignedTo?.name || 'not assigned yet'}</HeaderItemValue>
+              }
             </HeaderItem>
             <HeaderItem>
               Priority:
-              {overviewResults?.priority?.label === 'Medium' ?
-              <HeaderItemValue>-</HeaderItemValue>
-              :
-                <AvatarImage src={overviewResults?.priority?.icon} alt={overviewResults?.priority?.label} className="priority" />
+              {overviewResults?.priority ?
+                overviewResults.priority?.label === 'Medium' ?
+                  <HeaderItemValue>-</HeaderItemValue>
+                :
+                  <AvatarImage src={overviewResults?.priority?.icon} alt={overviewResults?.priority?.label} className="priority" />
+              : <HeaderItemValue>...</HeaderItemValue>
               }
             </HeaderItem>
             <HeaderItem>
               Created on:
               <HeaderItemValue>
-                { parseCreatedDate(overviewResults?.created) }
+                { overviewResults?.created ?
+                parseCreatedDate(overviewResults.created)
+              : '...'}
               </HeaderItemValue>
             </HeaderItem>
             <HeaderItem>
               Last updated: 
               <HeaderItemValue>
-                { parseUpdatedDate(overviewResults?.lastUpdated) }
+                { overviewResults?.lastUpdated ?
+                parseUpdatedDate(overviewResults?.lastUpdated) 
+              : '...' }
               </HeaderItemValue>
             </HeaderItem>
           </PropertyBar>
