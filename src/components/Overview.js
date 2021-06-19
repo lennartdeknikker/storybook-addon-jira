@@ -128,25 +128,29 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
         <OverviewHeader>
           <TicketLink href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${jiraSettings.id}`} target="_blank">
             <TicketTitle>
-              <strong>{jiraSettings.id}: </strong>{overviewResults.summary || ''}
+              <strong>{jiraSettings.id}{overviewResults?.summary ? ':' : ''} </strong>{overviewResults.summary || ''}
               <Icon icon="link" />
             </TicketTitle>
           </TicketLink>
-          <StatusLabel>{overviewResults?.status?.label}</StatusLabel>
+          <StatusLabel>{overviewResults?.status?.label || '...'}</StatusLabel>
           {overviewResults?.subtasksProgress && <ProgressBar subtasksProgress={overviewResults.subtasksProgress} />}
           <PropertyBar>
             <HeaderItem>
               Reporter:
-              {overviewResults?.reporter?.avatar ?
-                <AvatarImage src={overviewResults.reporter.avatar} alt={overviewResults.reporter?.name} />
-                : <HeaderItemValue>{overviewResults?.reporter?.name}</HeaderItemValue>
+              { overviewResults?.reporter ?
+                overviewResults?.reporter?.avatar ?
+                  <AvatarImage src={overviewResults.reporter.avatar} alt={overviewResults.reporter?.name} />
+                  : <HeaderItemValue>{overviewResults?.reporter?.name}</HeaderItemValue>
+                : <HeaderItemValue>...</HeaderItemValue>
               }
             </HeaderItem>
             <HeaderItem>
               Assigned to:
-              {overviewResults?.assignedTo?.avatar ?
-                <AvatarImage src={overviewResults.assignedTo.avatar} alt={overviewResults.assignedTo?.name} />
-                : <HeaderItemValue>{overviewResults?.assignedTo?.name || 'not assigned yet'}</HeaderItemValue>
+              {overviewResults?.assignedTo ? 
+                overviewResults.assignedTo?.avatar ?
+                  <AvatarImage src={overviewResults.assignedTo.avatar} alt={overviewResults.assignedTo?.name} />
+                  : <HeaderItemValue>{overviewResults?.assignedTo?.name || 'not assigned yet'}</HeaderItemValue>
+                : <HeaderItemValue>...</HeaderItemValue>
               }
             </HeaderItem>
             <HeaderItem>
