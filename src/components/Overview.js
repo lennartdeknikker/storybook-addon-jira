@@ -163,7 +163,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
 
   const CommentItem = styled.div({
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     borderRadius: '5px',
     backgroundColor: convert(themes.normal).color.light,
     padding: '5px',
@@ -174,6 +174,13 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
         marginTop: '5px'
       }
     }
+  })
+
+  const CommentBody = styled.div({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    minHeight: '24px'
   })
 
   const CommentDate = styled.span({
@@ -298,7 +305,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
                   <>
                     <CommentItem key={index}>
                       <AvatarImage src={comment.author.avatar} alt={comment.author.name} className="avatar-comment" />
-                      <div dangerouslySetInnerHTML={{__html: parseAdfToHtml(comment.body)}} />
+                      <CommentBody dangerouslySetInnerHTML={{__html: parseAdfToHtml(comment.body)}} />
                     </CommentItem>
                     <CommentDate>
                       {parseCreatedDate(comment.timeStamps.created)}
