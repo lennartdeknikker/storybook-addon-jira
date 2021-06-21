@@ -16,15 +16,14 @@ export const withRoundTrip = (storyFn) => {
   }
 
   const emit = useChannel({
-    [EVENTS.REQUEST]: async ({ ticketId }) => {
+    [EVENTS.REQUEST]: async ({ ticketId, isForSubtask }) => {
       let data = null
       if (ticketId) {
         const fetchedData = await fetch(`/api?ticketId=${ticketId}`)
         data = await fetchedData.json()
       }
       const parsedData = parseTicketData(data)
-
-      emit(EVENTS.RESULT, parsedData);
+      emit(EVENTS.RESULT, {parsedData: parsedData, isForSubtask: isForSubtask})
     },
     [STORY_CHANGED]: clearData,
     [EVENTS.CLEAR]: clearData,

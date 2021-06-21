@@ -55,12 +55,12 @@ const Link = styled.a({
   marginLeft: convert(themes.normal).layoutMargin
 })
 
-export const ListItem = ({ tabSubtask }) => {
+export const ListItem = ({ tabSubtask, fetchData }) => {
   const [opened, setOpened] = useState(false);
 
   const clickHandler = () => {
     setOpened(!opened)
-    
+    fetchData(tabSubtask.id, true)
   }
 
   return (
@@ -97,10 +97,10 @@ export const ListItem = ({ tabSubtask }) => {
   );
 };
 
-const List = ({ tabSubtasks }) => (
+const List = ({ tabSubtasks, fetchData }) => (
   <ListWrapper>
     {tabSubtasks.map((tabSubtask, id) => (
-      <ListItem key={id} tabSubtask={tabSubtask}></ListItem>
+      <ListItem key={id} tabSubtask={tabSubtask} fetchData={fetchData}></ListItem>
     ))}
   </ListWrapper>
 );

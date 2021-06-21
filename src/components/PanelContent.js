@@ -12,7 +12,7 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
   const jiraSettings = useParameter('jira', {})
   useEffect(() => fetchData(jiraSettings?.id), [jiraSettings?.id])
   
-  const statusIds = getAllStatusIds(results?.subtasks.categories, jiraSettings?.persistentTabs)
+  const statusIds = getAllStatusIds(results?.subtasks?.categories, jiraSettings?.persistentTabs)
   const EmptyMessage = styled.div({
     padding: '30px'
   })
@@ -41,7 +41,7 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
           color={convert(themes.normal).color?.[tabSubtasks?.length > 0 ? 'darker' : 'mediumdark']}
           >
             {tabSubtasks?.length > 0 ?
-            <List tabSubtasks={tabSubtasks} />
+            <List tabSubtasks={tabSubtasks} fetchData={fetchData} />
             : <EmptyMessage>There are no subtasks in this category.</EmptyMessage>
             }
           </div>

@@ -241,7 +241,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
         <OverviewHeader>
           <TicketLink href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${jiraSettings.id}`} target="_blank">
             <TicketTitle>
-              <strong>{jiraSettings.id}{overviewResults?.summary ? ':' : ''} </strong>{overviewResults.summary || ''}
+              <strong>{jiraSettings.id}{overviewResults?.summary ? ':' : ''} </strong>{overviewResults?.summary || ''}
               <Icon icon="link" />
             </TicketTitle>
           </TicketLink>
