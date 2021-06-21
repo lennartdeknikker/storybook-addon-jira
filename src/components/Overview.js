@@ -1,12 +1,12 @@
 import React from 'react';
-import { Placeholder, Button } from '@storybook/components';
+import { Placeholder } from '@storybook/components';
 import { styled, themes, convert } from "@storybook/theming";
-import parseAtlassianDocFormatToHtml from '../helpers/parseAtlassianDocFormatToHtml'
+import parseAdfToHtml from '../helpers/parseAdfToHtml'
 import ProgressBar from './ProgressBar';
 import { Icons } from "@storybook/components";
 import mapJiraColor from '../helpers/mapJiraColor';
 
-export const RequestDataButton = styled(Button)({
+export const RequestDataButton = styled.button({
   marginTop: '1rem',
 });
 
@@ -16,7 +16,23 @@ const Icon = styled(Icons)({
   marginLeft: '5px',
   alignSelf: "center",
   display: "inline-flex",
+  "&.icon-refresh": {
+    marginLeft: 0,
+    "@keyframes rotate": {
+      from: {
+        transform: "rotate(0)"
+      },
+      to: {
+        transform: "rotate(360deg)"
+      }
+    },
+    "&.icon-refreshing": {
+      marginLeft: 0,
+      animation: '1s infinite alternate rotate'
+    }
+  }
 });
+
 
 const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => {
 
@@ -60,7 +76,8 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     fontWeight: 300,
     marginTop: 0,
     a: {
-      color: convert(themes.normal).color.darkest,
+      color: '#0052cc',
+      textDecoration: 'none'
     },
     padding: '10px',
     borderRadius: '5px',
@@ -68,7 +85,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
   })
 
   const descriptionAdfString = overviewResults?.description || ''
-  const descriptionHtmlString = parseAtlassianDocFormatToHtml(descriptionAdfString)
+  const descriptionHtmlString = parseAdfToHtml(descriptionAdfString)
   const PropertyBar = styled.div({
     display: 'flex',
     flexWrap: 'wrap',
@@ -130,10 +147,6 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     fontWeight: 700
   })
 
-  const CommentFoldoutButton = styled.button({
-    border: 'none'
-  })
-
   const CommentSection = styled.ul({
     padding: 0,
     listStyleType: 'none'
@@ -165,6 +178,41 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     width: '100%',
     marginTop: '3px'
   })
+
+  const RefreshButton = styled.button(({ theme }) => ({
+    border: 0,
+    borderRadius: '3em',
+    cursor: 'pointer',
+    display: 'inline-block',
+    overflow: 'hidden',
+    padding: '3px 8px',
+    transition: 'all 150ms ease-out',
+    verticalAlign: 'top',
+    userSelect: 'none',
+    margin: 0,
+  
+    backgroundColor: theme.base === 'light' ? '#EAF3FC' : theme.color.border,
+    boxShadow:
+      theme.base === 'light'
+        ? `${theme.color.border} 0 0 0 1px inset`
+        : `${theme.color.darker}  0 0 0 1px inset`,
+    color: theme.color.secondary,
+  
+    '&:hover': {
+      background: '#EAF3FC',
+    },
+  
+    '&:focus': {
+      boxShadow: `${theme.color.secondary} 0 0 0 1px inset`,
+      outline: 'none',
+    },
+  
+    svg: {
+      display: 'block',
+      height: 14,
+      width: 14,
+    },
+  }));
 
   return (
     <Placeholder>
@@ -237,7 +285,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
                   <>
                     <CommentItem key={index}>
                       <AvatarImage src={comment.author.avatar} alt={comment.author.name} className="avatar-comment" />
-                      <div dangerouslySetInnerHTML={{__html: parseAtlassianDocFormatToHtml(comment.body)}} />
+                      <div dangerouslySetInnerHTML={{__html: parseAdfToHtml(comment.body)}} />
                     </CommentItem>
                     <CommentDate>
                       {parseCreatedDate(comment.timeStamps.created)}
@@ -249,17 +297,12 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
           </>
         }
         {jiraSettings?.id &&
-          <RequestDataButton
-          secondary
-          small
-          onClick={() =>  fetchData(jiraSettings?.id)}
-          style={{ marginRight: 16 }}
+          <RefreshButton
+            title="Refresh"
+            onClick={() =>  fetchData(jiraSettings?.id)}
           >
-            {fetchingState 
-              ? 'Fetching...'
-              : 'Refresh'
-            }                
-          </RequestDataButton>
+            <Icon icon="sync" className={`icon-refresh${fetchingState ? ' icon-refreshing' : ''}`} />
+          </RefreshButton>
         }
       </OverviewContainer>
     </Placeholder>
