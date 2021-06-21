@@ -88,16 +88,21 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
   const descriptionHtmlString = parseAdfToHtml(descriptionAdfString)
   const PropertyBar = styled.div({
     display: 'flex',
+    width: '100%',
     flexWrap: 'wrap',
-    width: '100%'
   })
 
   const HeaderItem = styled.div({
     display: 'flex',
     alignItems: 'center',
     width: 'fit-content',
-    margin: '10px 20px 10px 0'
+    margin: '10px 20px 10px 0',
+    "&:last-of-type": {
+      flex: 1,
+      justifyContent: 'flex-end'
+    }
   })
+
   const AvatarImage = styled.img({
     borderRadius: "50%",
     width: '24px',
@@ -271,6 +276,14 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
               : '...' }
               </HeaderItemValue>
             </HeaderItem>
+            <HeaderItem>
+              <RefreshButton
+                title="Refresh"
+                onClick={() =>  fetchData(jiraSettings?.id)}
+                >
+                <Icon icon="sync" className={`icon-refresh${fetchingState ? ' icon-refreshing' : ''}`} />
+              </RefreshButton>
+            </HeaderItem>
           </PropertyBar>
         </OverviewHeader>
         {overviewResults?.description && <Description dangerouslySetInnerHTML={{__html: descriptionHtmlString}} />}
@@ -295,14 +308,6 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
               ))}
             </CommentSection>
           </>
-        }
-        {jiraSettings?.id &&
-          <RefreshButton
-            title="Refresh"
-            onClick={() =>  fetchData(jiraSettings?.id)}
-          >
-            <Icon icon="sync" className={`icon-refresh${fetchingState ? ' icon-refreshing' : ''}`} />
-          </RefreshButton>
         }
       </OverviewContainer>
     </Placeholder>
