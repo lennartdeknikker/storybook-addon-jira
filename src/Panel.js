@@ -27,6 +27,10 @@ export const Panel = (props) => {
     emit(EVENTS.REQUEST, {ticketId: ticketId})
   }
 
+  const fetchSubticketData = (ticketId) => {
+    console.log('should fetch subticket data')
+  }
+
   return (
     <AddonPanel {...props}>
       <PanelContent

@@ -56,18 +56,23 @@ const Link = styled.a({
 })
 
 export const ListItem = ({ tabSubtask }) => {
-  const [open, onToggle] = useState(false);
+  const [opened, setOpened] = useState(false);
+
+  const clickHandler = () => {
+    setOpened(!opened)
+    
+  }
 
   return (
     <Fragment>
       <Wrapper>
-        <HeaderBar onClick={() => onToggle(!open)} role="button">
+        <HeaderBar onClick={clickHandler} role="button">
           <Icon
             icon="chevrondown"
             size={10}
             color={convert(themes.normal).appBorderColor}
             style={{
-              transform: `rotate(${open ? 0 : -90}deg)`,
+              transform: `rotate(${opened ? 0 : -90}deg)`,
             }}
           />
           {`${tabSubtask.id}: ${tabSubtask.summary}`}
@@ -80,8 +85,9 @@ export const ListItem = ({ tabSubtask }) => {
           </Link>
         </HeaderBar>
       </Wrapper>
-      {open ? 
+      {opened ? 
         <Description>
+          // item content here
           {tabSubtask.summary}
         </Description>
         

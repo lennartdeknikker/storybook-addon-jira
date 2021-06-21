@@ -5,6 +5,11 @@ import { Header } from './Header';
 export default {
   title: 'Example/Header',
   component: Header,
+  parameters: {
+    jira: {
+      id: 'RING-1021'
+    }
+  },
 };
 
 const Template = (args) => <Header {...args} />;

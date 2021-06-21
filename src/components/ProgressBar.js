@@ -6,8 +6,8 @@ const createProgressBarCssVariables = (subtasksProgress) => {
   const cssVariables = {}
   // Add percentages of progressbarParts for widths.
   for (let subtaskProgress of subtasksProgress) {
-    cssVariables[`--${subtaskProgress.id}-width`] = `${subtaskProgress.percentage}%`
-    cssVariables[`--${subtaskProgress.id}-color`] = mapJiraColor(subtaskProgress.color)
+    cssVariables[`--${subtaskProgress.id}-width`] = `${subtaskProgress?.percentage}%`
+    cssVariables[`--${subtaskProgress.id}-color`] = mapJiraColor(subtaskProgress?.color)
   }
   return cssVariables
 }
@@ -55,7 +55,7 @@ const ProgressBar = ({subtasksProgress}) => {
         })}
       </ProgressBarWrapper>
       <ProgressBarLabel>
-        {subtasksProgress[0].percentage}% {subtasksProgress[0].id}
+        {subtasksProgress[0]?.percentage}% {subtasksProgress[0]?.id}
       </ProgressBarLabel>
     </ProgressBarContainer>
   )

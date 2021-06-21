@@ -246,7 +246,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
             </TicketTitle>
           </TicketLink>
           <StatusLabel>{overviewResults?.status?.label || '...'}</StatusLabel>
-          {overviewResults?.subtasksProgress && <ProgressBar subtasksProgress={overviewResults.subtasksProgress} />}
+          {overviewResults?.subtasksProgress?.length > 0 && <ProgressBar subtasksProgress={overviewResults.subtasksProgress} />}
           <PropertyBar>
             <HeaderItem>
               Reporter:
