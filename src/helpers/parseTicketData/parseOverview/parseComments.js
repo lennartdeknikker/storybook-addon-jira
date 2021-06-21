@@ -5,7 +5,10 @@ const parseComments = (commentData) => {
   }
   for (let comment of commentData) {
     parsedComments.items.push({
-      author: comment.author.displayName,
+      author: {
+        name: comment?.author?.displayName,
+        avatar: comment?.author?.avatarUrls['48x48']
+      },
       body: comment.body,
       timeStamps: {
         created: new Date(comment.created),
@@ -13,6 +16,7 @@ const parseComments = (commentData) => {
       }
     })
   }
+  parsedComments.items.reverse()
   return parsedComments
 }
 

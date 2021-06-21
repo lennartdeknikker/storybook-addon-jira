@@ -1,12 +1,10 @@
 import React from 'react';
 import { Placeholder, Button } from '@storybook/components';
 import { styled, themes, convert } from "@storybook/theming";
-import { parseCamelCaseToString } from '../helpers/parseCamelCase'
-import parseAtlassianDocFormatToMarkDown from '../helpers/parseAtlassianDocFormatToMarkDown'
+import parseAtlassianDocFormatToHtml from '../helpers/parseAtlassianDocFormatToHtml'
 import ProgressBar from './ProgressBar';
 import { Icons } from "@storybook/components";
 import mapJiraColor from '../helpers/mapJiraColor';
-import nmd from 'nano-markdown'
 
 export const RequestDataButton = styled(Button)({
   marginTop: '1rem',
@@ -21,6 +19,7 @@ const Icon = styled(Icons)({
 });
 
 const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => {
+
   const OverviewHeader = styled.div({
     display: 'flex',
     flexWrap: 'wrap'
@@ -47,6 +46,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
   const StatusLabel = styled.span({
     display: 'block',
     padding: '10px',
+    fontSize: '.5rem',
     backgroundColor: mapJiraColor(overviewResults?.status?.color),
     color: 'white',
     width: 'fit-content',
@@ -58,18 +58,17 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
   const Description = styled.p({
     display: 'block',
     fontWeight: 300,
-    borderRadius: '5px',
     marginTop: 0,
     a: {
       color: convert(themes.normal).color.darkest,
     },
     padding: '10px',
-    backgroundColor: convert(themes.normal).color.light,
+    borderRadius: '5px',
+    backgroundColor: convert(themes.normal).color.light
   })
 
   const descriptionAdfString = overviewResults?.description || ''
-  const descriptionMarkdownString = parseAtlassianDocFormatToMarkDown(descriptionAdfString)
-  const descriptionHtmlString = nmd(descriptionMarkdownString)
+  const descriptionHtmlString = parseAtlassianDocFormatToHtml(descriptionAdfString)
   const PropertyBar = styled.div({
     display: 'flex',
     flexWrap: 'wrap',
@@ -87,8 +86,12 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     width: '24px',
     height: '24px',
     marginLeft: '5px',
-    '&.priority': {
+    '&.avatar-priority': {
       transform: "scale(0.6) translateY(5px)"
+    },
+    '&.avatar-comment': {
+      marginRight: '10px',
+      marginLeft: 0,
     }
   })
 
@@ -121,6 +124,47 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     const suffix = differenceInDays === 1 ? 'day' : 'days'
     return ` ${differenceInDays} ${suffix} ago`
   }
+
+  const CommentSectionTitle = styled.h2({
+    fontSize: '1em',
+    fontWeight: 700
+  })
+
+  const CommentFoldoutButton = styled.button({
+    border: 'none'
+  })
+
+  const CommentSection = styled.ul({
+    padding: 0,
+    listStyleType: 'none'
+  })
+
+  const Comment= styled.li({
+    marginBottom: '10px'
+  })
+
+  const CommentItem = styled.div({
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: '5px',
+    backgroundColor: convert(themes.normal).color.light,
+    padding: '5px',
+    fontWeight: 300,
+    '& div p': {
+      margin: 0,
+      '& + p': {
+        marginTop: '5px'
+      }
+    }
+  })
+
+  const CommentDate = styled.span({
+    fontSize: '0.5rem',
+    display: 'block',
+    textAlign: 'right',
+    width: '100%',
+    marginTop: '3px'
+  })
 
   return (
     <Placeholder>
@@ -159,7 +203,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
                 overviewResults.priority?.label === 'Medium' ?
                   <HeaderItemValue>-</HeaderItemValue>
                 :
-                  <AvatarImage src={overviewResults?.priority?.icon} alt={overviewResults?.priority?.label} className="priority" />
+                  <AvatarImage src={overviewResults?.priority?.icon} alt={overviewResults?.priority?.label} className="avatar-priority" />
               : <HeaderItemValue>...</HeaderItemValue>
               }
             </HeaderItem>
@@ -182,26 +226,41 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
           </PropertyBar>
         </OverviewHeader>
         {overviewResults?.description && <Description dangerouslySetInnerHTML={{__html: descriptionHtmlString}} />}
-      <ul>
-        {Object.keys(overviewResults).map((key, index) =>
-          typeof overviewResults[key] === 'string' ?
-          <li key={index}>{parseCamelCaseToString(key)}: {overviewResults[key]}</li>
-          : <li key={index}>{key}</li>
-        )}
-      </ul>
-      {jiraSettings?.id &&
-        <RequestDataButton
-        secondary
-        small
-        onClick={() =>  fetchData(jiraSettings?.id)}
-        style={{ marginRight: 16 }}
-        >
-          {fetchingState 
-            ? 'Fetching...'
-            : 'Refresh'
-          }                
-        </RequestDataButton>
-      }
+        {overviewResults?.comments?.items?.length > 0 &&
+          <>
+            <CommentSectionTitle>
+              Comments
+            </CommentSectionTitle>
+            <CommentSection>
+              {overviewResults.comments.items.map((comment, index) => (
+                <Comment key={index}>
+                  <>
+                    <CommentItem key={index}>
+                      <AvatarImage src={comment.author.avatar} alt={comment.author.name} className="avatar-comment" />
+                      <div dangerouslySetInnerHTML={{__html: parseAtlassianDocFormatToHtml(comment.body)}} />
+                    </CommentItem>
+                    <CommentDate>
+                      {parseCreatedDate(comment.timeStamps.created)}
+                    </CommentDate>
+                  </>
+                </Comment>
+              ))}
+            </CommentSection>
+          </>
+        }
+        {jiraSettings?.id &&
+          <RequestDataButton
+          secondary
+          small
+          onClick={() =>  fetchData(jiraSettings?.id)}
+          style={{ marginRight: 16 }}
+          >
+            {fetchingState 
+              ? 'Fetching...'
+              : 'Refresh'
+            }                
+          </RequestDataButton>
+        }
       </OverviewContainer>
     </Placeholder>
   )
