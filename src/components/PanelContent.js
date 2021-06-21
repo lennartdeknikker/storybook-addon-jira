@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { themes, convert } from '@storybook/theming';
+import { themes, convert, styled } from '@storybook/theming';
 import { TabsState } from '@storybook/components';
 import { useParameter } from '@storybook/api'
 import getAllStatusIds from '../helpers/getAllStatusIds'
@@ -13,11 +13,14 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
   useEffect(() => fetchData(jiraSettings?.id), [jiraSettings?.id])
   
   const statusIds = getAllStatusIds(results?.subtasks.categories, jiraSettings?.persistentTabs)
+  const EmptyMessage = styled.div({
+    padding: '30px'
+  })
 
   return (
     <TabsState
       initial="overview"
-      backgroundColor={convert(themes.normal).background.hoverable}
+      backgroundColor={convert(themes.normal).color.light}
     >
       <div
         id="overview"
@@ -35,10 +38,11 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
           key={`${index}`}
           id={statusId}
           title={`${tabLabel} (${tabSubtasks?.length || 0})`}
+          color={convert(themes.normal).color?.[tabSubtasks?.length > 0 ? 'darker' : 'mediumdark']}
           >
             {tabSubtasks?.length > 0 ?
             <List tabSubtasks={tabSubtasks} />
-            : "There's no subtasks in this category"
+            : <EmptyMessage>There are no subtasks in this category.</EmptyMessage>
             }
           </div>
         )
