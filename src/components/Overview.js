@@ -45,6 +45,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     color: convert(themes.normal).color.dark,
     textDecoration: 'none',
     flex: 1,
+    transition: 'color 0.2s',
     ":hover": {
       color: convert(themes.normal).color.darkest,
     }
@@ -153,19 +154,27 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
   })
 
   const CommentSection = styled.ul({
-    padding: 0,
-    listStyleType: 'none'
+    padding: '10px',
+    listStyleType: 'none',
+    borderRadius: '5px',
+    backgroundColor: convert(themes.normal).color.light,
   })
 
   const Comment= styled.li({
     marginBottom: '10px'
   })
 
+  const CommentAuthor = styled.div({
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '5px'
+  })
+
   const CommentItem = styled.div({
     display: 'flex',
     alignItems: 'flex-start',
     borderRadius: '5px',
-    backgroundColor: convert(themes.normal).color.light,
+    backgroundColor: convert(themes.normal).color.lightest,
     padding: '5px',
     fontWeight: 300,
     '& div p': {
@@ -303,8 +312,11 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
               {overviewResults.comments.items.map((comment, index) => (
                 <Comment key={index}>
                   <>
-                    <CommentItem key={index}>
+                    <CommentAuthor>
                       <AvatarImage src={comment.author.avatar} alt={comment.author.name} className="avatar-comment" />
+                      {comment.author.name}
+                    </CommentAuthor>
+                    <CommentItem key={index}>
                       <CommentBody dangerouslySetInnerHTML={{__html: parseAdfToHtml(comment.body)}} />
                     </CommentItem>
                     <CommentDate>

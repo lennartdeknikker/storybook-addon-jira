@@ -70,7 +70,7 @@ export const ListItem = ({ tabSubtask }) => {
               transform: `rotate(${open ? 0 : -90}deg)`,
             }}
           />
-          {tabSubtask.id}
+          {`${tabSubtask.id}: ${tabSubtask.summary}`}
           <Link href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${tabSubtask.id}`} target="_blank">
             <Icon
               icon="link"
@@ -80,7 +80,13 @@ export const ListItem = ({ tabSubtask }) => {
           </Link>
         </HeaderBar>
       </Wrapper>
-      {open ? <Description>{tabSubtask.summary}</Description> : null}
+      {open ? 
+        <Description>
+          {tabSubtask.summary}
+        </Description>
+        
+        : null
+        }
     </Fragment>
   );
 };
