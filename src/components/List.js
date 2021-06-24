@@ -4,7 +4,7 @@ import { Icons } from "@storybook/components";
 import CommentSection from "./overview/CommentSection";
 import PropertyBar from "./overview/PropertyBar";
 import TicketLink from "./overview/TicketLink";
-import Descript from './overview/Descript';
+import Description from './overview/Description';
 
 
 const ListWrapper = styled.ul({
@@ -94,7 +94,7 @@ export const ListItem = ({ tabSubtask, fetchData }) => {
           created={overviewData?.created}
           lastUpdated={overviewData?.lastUpdated}
         />
-        {overviewData?.description && <Descript descriptionAdfString={overviewData.description} /> }
+        {overviewData?.description && <Description descriptionAdfString={overviewData.description} /> }
         {overviewData?.comments?.items?.length > 0 && <CommentSection {...tabSubtask.data.overview.comments} /> }
       </DetailView>        
       : null

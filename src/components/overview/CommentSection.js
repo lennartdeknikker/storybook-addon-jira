@@ -7,7 +7,8 @@ import parseCreatedDate from '../../helpers/parseCreatedDate';
 const CommentSection = ({ items }) => {
   const CommentSectionTitle = styled.h2({
     fontSize: '1em',
-    fontWeight: 700
+    fontWeight: 700,
+    margin: '0 0 20px 0'
   })
 
   const CommentSectionList = styled.ul({
@@ -15,6 +16,7 @@ const CommentSection = ({ items }) => {
     listStyleType: 'none',
     borderRadius: '5px',
     backgroundColor: convert(themes.normal).color.light,
+    marginBottom: '1em'
   })
 
   const Comment= styled.li({
@@ -24,7 +26,8 @@ const CommentSection = ({ items }) => {
   const CommentAuthor = styled.div({
     display: 'flex',
     alignItems: 'center',
-    marginBottom: '5px'
+    marginBottom: '5px',
+    color: convert(themes.normal).color.dark,
   })
 
   const CommentItem = styled.div({
@@ -59,10 +62,10 @@ const CommentSection = ({ items }) => {
 
   return (
     <>
+      <CommentSectionList>
       <CommentSectionTitle>
         Comments
       </CommentSectionTitle>
-      <CommentSectionList>
         {items.map((comment, index) => (
           <Comment key={index}>
             <>

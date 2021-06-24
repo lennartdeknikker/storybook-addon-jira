@@ -6,7 +6,7 @@ import mapJiraColor from '../helpers/mapJiraColor';
 import CommentSection from './overview/CommentSection';
 import PropertyBar from './overview/PropertyBar';
 import TicketLink from './overview/TicketLink';
-import Descript from './overview/Descript';
+import Description from './overview/Description';
 
 export const RequestDataButton = styled.button({
   marginTop: '1rem',
@@ -53,7 +53,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
             lastUpdated={overviewResults.lastUpdated}
           />
         </OverviewHeader>
-        {overviewResults?.description && <Descript descriptionAdfString={overviewResults?.description} /> }
+        {overviewResults?.description && <Description descriptionAdfString={overviewResults?.description} /> }
         {overviewResults?.comments?.items?.length > 0 && <CommentSection {...overviewResults.comments} /> }
       </OverviewContainer>
     </Placeholder>

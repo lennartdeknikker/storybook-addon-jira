@@ -19,7 +19,8 @@ const PropertyBar = ({ fetchId, fetchData, fetchingState, reporter, assignedTo, 
     margin: '10px 20px 10px 0',
     "&:nth-of-type(6)": {
       flex: 1,
-      justifyContent: 'flex-end'
+      justifyContent: 'flex-end',
+      marginRight: 0
     }
   })
 
