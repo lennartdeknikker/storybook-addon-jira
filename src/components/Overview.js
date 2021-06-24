@@ -5,6 +5,9 @@ import parseAdfToHtml from '../helpers/parseAdfToHtml'
 import ProgressBar from './ProgressBar';
 import { Icons } from "@storybook/components";
 import mapJiraColor from '../helpers/mapJiraColor';
+import parseCreatedDate from '../helpers/parseCreatedDate';
+import CommentSection from './overview/CommentSection';
+import AvatarImage from './overview/AvatarImage';
 
 export const RequestDataButton = styled.button({
   marginTop: '1rem',
@@ -104,40 +107,10 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     }
   })
 
-  const AvatarImage = styled.img({
-    borderRadius: "50%",
-    width: '24px',
-    height: '24px',
-    marginLeft: '5px',
-    '&.avatar-priority': {
-      transform: "scale(0.6) translateY(5px)"
-    },
-    '&.avatar-comment': {
-      marginRight: '10px',
-      marginLeft: 0,
-    }
-  })
-
   const HeaderItemValue = styled.span({
     fontWeight: 300,
     textIndent: '5px'
   })
-
-  const parseCreatedDate = (date) => {
-    const dateObject = new Date(date)
-    const year = dateObject.getFullYear()
-    const month = dateObject.toLocaleString('default', { month: 'long' });
-    const day = dateObject.getDate()
-    let daySuffix = 'th'
-    const dayLastDigit = Number(Array.from(String(day)).pop())
-    if (dayLastDigit === 3) daySuffix = 'rd'
-    if (dayLastDigit === 2) daySuffix = 'nd'
-    if (dayLastDigit === 1) daySuffix = 'st'
-    if (day === 13) daySuffix = 'th'
-    if (day === 12) daySuffix = 'th'
-    if (day === 11) daySuffix = 'th'
-    return ` ${month} ${day}${daySuffix}, ${year}`
-  }
 
   const parseUpdatedDate = (date) => {
     const lastUpdated = new Date(date)
@@ -147,58 +120,6 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     const suffix = differenceInDays === 1 ? 'day' : 'days'
     return ` ${differenceInDays} ${suffix} ago`
   }
-
-  const CommentSectionTitle = styled.h2({
-    fontSize: '1em',
-    fontWeight: 700
-  })
-
-  const CommentSection = styled.ul({
-    padding: '10px',
-    listStyleType: 'none',
-    borderRadius: '5px',
-    backgroundColor: convert(themes.normal).color.light,
-  })
-
-  const Comment= styled.li({
-    marginBottom: '10px'
-  })
-
-  const CommentAuthor = styled.div({
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '5px'
-  })
-
-  const CommentItem = styled.div({
-    display: 'flex',
-    alignItems: 'flex-start',
-    borderRadius: '5px',
-    backgroundColor: convert(themes.normal).color.lightest,
-    padding: '5px',
-    fontWeight: 300,
-    '& div p': {
-      margin: 0,
-      '& + p': {
-        marginTop: '5px'
-      }
-    }
-  })
-
-  const CommentBody = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    minHeight: '24px'
-  })
-
-  const CommentDate = styled.span({
-    fontSize: '0.5rem',
-    display: 'block',
-    textAlign: 'right',
-    width: '100%',
-    marginTop: '3px'
-  })
 
   const RefreshButton = styled.button(({ theme }) => ({
     border: 0,
@@ -303,31 +224,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
           </PropertyBar>
         </OverviewHeader>
         {overviewResults?.description && <Description dangerouslySetInnerHTML={{__html: descriptionHtmlString}} />}
-        {overviewResults?.comments?.items?.length > 0 &&
-          <>
-            <CommentSectionTitle>
-              Comments
-            </CommentSectionTitle>
-            <CommentSection>
-              {overviewResults.comments.items.map((comment, index) => (
-                <Comment key={index}>
-                  <>
-                    <CommentAuthor>
-                      <AvatarImage src={comment.author.avatar} alt={comment.author.name} className="avatar-comment" />
-                      {comment.author.name}
-                    </CommentAuthor>
-                    <CommentItem key={index}>
-                      <CommentBody dangerouslySetInnerHTML={{__html: parseAdfToHtml(comment.body)}} />
-                    </CommentItem>
-                    <CommentDate>
-                      {parseCreatedDate(comment.timeStamps.created)}
-                    </CommentDate>
-                  </>
-                </Comment>
-              ))}
-            </CommentSection>
-          </>
-        }
+        {overviewResults?.comments?.items?.length > 0 && <CommentSection {...overviewResults.comments} /> }
       </OverviewContainer>
     </Placeholder>
   )

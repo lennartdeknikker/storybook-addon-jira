@@ -30,6 +30,7 @@ export const Panel = (props) => {
         const updatedResults = JSON.parse(localStorage.getItem('results'))
         const statusIdOfSubtask = parseToCamelCase(parsedData.overview.status.label)
         const idOfSubtask = parsedData.overview.ticketId
+        console.log(parsedData)
         updatedResults.subtasks.categories[statusIdOfSubtask].items.map(item => {
           if (item.id === idOfSubtask) item.data = parsedData
           return item

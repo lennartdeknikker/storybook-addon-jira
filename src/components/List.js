@@ -88,7 +88,7 @@ export const ListItem = ({ tabSubtask, fetchData }) => {
       {opened ? 
         <Description>
           // item content here
-          {tabSubtask.summary}
+          {tabSubtask?.data?.overview?.description}
         </Description>
         
         : null
