@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAddonState, useChannel } from "@storybook/api";
 import { AddonPanel } from "@storybook/components";
 import { ADDON_ID, EVENTS } from "./constants";
 import { PanelContent } from "./components/PanelContent";
+import { parseToCamelCase } from "./helpers/parseCamelCase";
 
 export const Panel = (props) => {
   // https://storybook.js.org/docs/react/addons/addons-api#useaddonstate
@@ -12,18 +13,30 @@ export const Panel = (props) => {
     data: {}
   });
 
+  useEffect(() => {
+    console.log(results)
+  }, [results])
+
+
   const [fetchingState, setFetchingState] = useState(false)
 
   // https://storybook.js.org/docs/react/addons/addons-api#usechannel
   const emit = useChannel({
-    [EVENTS.RESULT]: ({parsedData, isForSubtask}) => {
+    [EVENTS.RESULT]: async function ({parsedData, isForSubtask}) {
       if (!isForSubtask) {
         setResults(parsedData)
-        setFetchingState(false)
+        localStorage.setItem('results', JSON.stringify(parsedData))
       } else {
-        // add result changing logic here.
-        console.log('data for subticket to add', parsedData)
+        const currentResults = JSON.parse(localStorage.getItem('results'))
+        const statusIdOfSubtask = parseToCamelCase(parsedData.overview.status.label)
+        const idOfSubtask = parsedData.overview.ticketId
+        currentResults.subtasks.categories[statusIdOfSubtask].items.map(item => {
+          if (item.id === idOfSubtask) item.data = parsedData
+          return item
+        })
+        setResults(currentResults)
       }
+      setFetchingState(false)
     },
   });
 
