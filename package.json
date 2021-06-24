@@ -1,11 +1,13 @@
 {
   "name": "storybook-jira-addon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An extra panel to show JIRA tickets concerning certain components.",
   "author": "Lennart de Knikker",
   "storybook": {
     "displayName": "JIRA",
-    "unsupportedFrameworks": ["react-native"],
+    "unsupportedFrameworks": [
+      "react-native"
+    ],
     "icon": "https://github.com/lennartdeknikker/storybook-addon-jira/blob/main/jira-logo.png"
   },
   "keywords": [
