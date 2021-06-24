@@ -6,9 +6,11 @@ This addon makes it possible to show JIRA tickets concerning components within a
 To use this addon, you will need to generate an API token for your JIRA account. This can be acquired [here](https://id.atlassian.com/manage-profile/security/api-tokens).
 
 1.  Set up your ENV variables
-Furthermore, you will need to add an .env file containing the following values:
-    - `STORYBOOK_JIRA_API_ENDPOINT=`
-      - This will be the API endpoint for obtaining ticket data from JIRA. This will be something like: `https://<company-name>.atlassian.net/rest/api/latest/issue`
+    You will need to add an .env file containing the following values:
+    <details>
+    <summary>`STORYBOOK_JIRA_API_ENDPOINT=`</summary> 
+    This will be the API endpoint for obtaining ticket data from JIRA. This will be something like: `https://<company-name>.atlassian.net/rest/api/latest/issue`
+    </details>
     - `STORYBOOK_JIRA_USERNAME=`
       - This will be your username for logging in to JIRA. Most of the times it will just be your email address.
     - `STORYBOOK_JIRA_API_KEY=`
@@ -16,7 +18,7 @@ Furthermore, you will need to add an .env file containing the following values:
     - `STORYBOOK_JIRA_BASE_URL=`
         - this will be something like: `https://<company-name>.atlassian.net/browse`
 
-<details open>
+<details>
 <summary>Want to ruin the surprise?</summary>
 <br>
 Well, you asked for it!
