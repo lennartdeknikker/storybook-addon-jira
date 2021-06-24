@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { styled, themes, convert } from "@storybook/theming";
 import { Icons } from "@storybook/components";
+import CommentSection from "./overview/CommentSection";
 
 const ListWrapper = styled.ul({
   listStyle: "none",
@@ -56,6 +57,7 @@ const Link = styled.a({
 })
 
 export const ListItem = ({ tabSubtask, fetchData }) => {
+  console.log('🚀 ~ tabSubtask', tabSubtask)
   const [opened, setOpened] = useState(false);
 
   const clickHandler = () => {
@@ -89,6 +91,7 @@ export const ListItem = ({ tabSubtask, fetchData }) => {
         <Description>
           // item content here
           {tabSubtask?.data?.overview?.description}
+          { tabSubtask?.data?.overview?.comments?.items?.length > 0 && <CommentSection {...tabSubtask.data.overview.comments} /> }
         </Description>
         
         : null

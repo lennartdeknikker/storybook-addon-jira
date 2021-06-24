@@ -4,7 +4,9 @@ import AvatarImage from './AvatarImage';
 import parseAdfToHtml from '../../helpers/parseAdfToHtml'
 import parseCreatedDate from '../../helpers/parseCreatedDate';
 
-const CommentSection = ({ items }) => {
+const CommentSection = (props) => {
+  const { items } = props
+console.log('🚀 ~ items', props)
   const CommentSectionTitle = styled.h2({
     fontSize: '1em',
     fontWeight: 700
