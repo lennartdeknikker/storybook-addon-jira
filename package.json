@@ -1,18 +1,25 @@
 {
   "name": "storybook-jira-addon",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "An extra panel to show JIRA tickets concerning certain components.",
+  "author": "Lennart de Knikker",
+  "storybook": {
+    "displayName": "JIRA",
+    "icon": "https://yoursite.com/link-to-your-icon.png"
+  },
   "keywords": [
     "storybook-addons",
     "tickets",
     "JIRA",
-    "Atlassian"
+    "Atlassian",
+    "integration",
+    "agile",
+    "workflow"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/lennartdeknikker/storybook-addon-jira"
   },
-  "author": "Lennart de Knikker",
   "license": "MIT",
   "main": "dist/preset",
   "files": [
