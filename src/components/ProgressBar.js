@@ -15,7 +15,8 @@ const createProgressBarCssVariables = (subtasksProgress) => {
 const ProgressBar = ({subtasksProgress}) => {
   const ProgressBarContainer = styled.div({
     display: 'flex',
-    width: '100%'
+    width: '100%',
+    marginTop: '15px'
   })
 
   const ProgressBarWrapper = styled.div({

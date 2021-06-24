@@ -2,6 +2,10 @@ import React, { Fragment, useState } from "react";
 import { styled, themes, convert } from "@storybook/theming";
 import { Icons } from "@storybook/components";
 import CommentSection from "./overview/CommentSection";
+import PropertyBar from "./overview/PropertyBar";
+import TicketLink from "./overview/TicketLink";
+import Descript from './overview/Descript';
+
 
 const ListWrapper = styled.ul({
   listStyle: "none",
@@ -39,6 +43,7 @@ const HeaderBar = styled.div({
   cursor: "pointer",
   borderLeft: "3px solid transparent",
   width: "100%",
+  display: 'flex',
 
   "&:focus": {
     outline: "0 none",
@@ -46,24 +51,20 @@ const HeaderBar = styled.div({
   },
 });
 
-const Description = styled.div({
+const DetailView = styled.div({
   padding: convert(themes.normal).layoutMargin,
   marginBottom: convert(themes.normal).layoutMargin,
-  fontStyle: "italic",
 });
 
-const Link = styled.a({
-  marginLeft: convert(themes.normal).layoutMargin
-})
-
 export const ListItem = ({ tabSubtask, fetchData }) => {
-  console.log('🚀 ~ tabSubtask', tabSubtask)
+  const overviewData = tabSubtask?.data?.overview
   const [opened, setOpened] = useState(false);
 
   const clickHandler = () => {
+    if (!overviewData) fetchData(tabSubtask.id, true)
     setOpened(!opened)
-    fetchData(tabSubtask.id, true)
   }
+
 
   return (
     <Fragment>
@@ -77,23 +78,21 @@ export const ListItem = ({ tabSubtask, fetchData }) => {
               transform: `rotate(${opened ? 0 : -90}deg)`,
             }}
           />
-          {`${tabSubtask.id}: ${tabSubtask.summary}`}
-          <Link href={`${process.env.STORYBOOK_JIRA_BASE_URL}/${tabSubtask.id}`} target="_blank">
-            <Icon
-              icon="link"
-              size={10}
-              color={convert(themes.normal).appBorderColor}
-            />
-          </Link>
+          <TicketLink ticketId={tabSubtask.id} summary={tabSubtask.summary} />
         </HeaderBar>
       </Wrapper>
-      {opened ? 
-        <Description>
-          // item content here
-          {tabSubtask?.data?.overview?.description}
-          { tabSubtask?.data?.overview?.comments?.items?.length > 0 && <CommentSection {...tabSubtask.data.overview.comments} /> }
-        </Description>
-        
+      {opened && overviewData ? 
+        <DetailView>
+          <PropertyBar
+            reporter={overviewData?.reporter}
+            assignedTo={overviewData?.assignedTo}
+            priority={overviewData?.priority}
+            created={overviewData?.created}
+            lastUpdated={overviewData?.lastUpdated}
+          />
+          {overviewData?.description && <Descript descriptionAdfString={overviewData.description} /> }
+          {overviewData?.comments?.items?.length > 0 && <CommentSection {...tabSubtask.data.overview.comments} /> }
+        </DetailView>        
         : null
         }
     </Fragment>

@@ -13,11 +13,6 @@ export const Panel = (props) => {
     data: {}
   });
 
-  useEffect(() => {
-    console.log('results changed to: ', results)
-  }, [results])
-
-
   const [fetchingState, setFetchingState] = useState(false)
 
   // https://storybook.js.org/docs/react/addons/addons-api#usechannel
@@ -30,7 +25,6 @@ export const Panel = (props) => {
         const updatedResults = JSON.parse(localStorage.getItem('results'))
         const statusIdOfSubtask = parseToCamelCase(parsedData.overview.status.label)
         const idOfSubtask = parsedData.overview.ticketId
-        console.log(parsedData)
         updatedResults.subtasks.categories[statusIdOfSubtask].items.map(item => {
           if (item.id === idOfSubtask) item.data = parsedData
           return item
