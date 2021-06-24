@@ -46,7 +46,7 @@ export default {
     </details>
 
 
-3.  Within storybook you then need to run some middleware to set up the api. To do this, add a `middleware.js` file in your `.storybook` folder. This file then needs to contain the following code:
+3.  Within storybook you then need to run some middleware to set up the api. To do this, add a `middleware.js` file in your `.storybook` folder. To use basic authentication this file then needs to contain the following code:
 
     ```js
     const fetch = require("node-fetch");
@@ -73,6 +73,8 @@ export default {
       })
     }
     ```
+    *Alternatively you can set up authentication using OAuth as is described [here](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/#authentication).*
+
     You might need to add `node-fetch` to your dev dependencies by running `yarn add node-fetch -D`.
 
     ## Additional configuration
