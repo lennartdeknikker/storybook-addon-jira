@@ -75,7 +75,7 @@ export default {
     ```
     *Alternatively you can set up authentication using OAuth as is described [here](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/#authentication).*
 
-    You might need to add `node-fetch` to your dev dependencies by running `yarn add node-fetch -D`.
+    You might need to still add `node-fetch` to your dev dependencies by running `yarn add node-fetch -D`.
 
     ## Additional configuration
 
