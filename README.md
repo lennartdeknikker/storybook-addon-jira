@@ -1,11 +1,33 @@
 # JIRA addon for Storybook
 
-This addon makes it possible to show JIRA tickets concerning components within an added Storybook panel.
+This addon makes JIRA ticket information visible and linked within your stories. 
+
+![screenshot](docs/screenshot.png)
 
 ## Usage
-To use this addon, you will need to generate an API token for your JIRA account. This can be acquired [here](https://id.atlassian.com/manage-profile/security/api-tokens).
+Just add the ticket ID as a parameter to your component story like this:
 
-1.  You will need to add the following values to your `.env` file.:
+```js
+export default {
+  title: "Example/Button",
+  component: Button,
+  parameters: {
+    jira: {
+      id: 'RING-1020'
+    }
+  },
+};
+```
+
+## Installation
+1.  To add this addon to your storybook configuration, first run `yarn add storybook-jira-addon`.
+2.  Then add it to the `addons` array in `main.js`:
+    ```js
+    addons: [
+      "storybook-jira-addon"
+    ],
+    ```
+2.  You will need to add the following values to your `.env` file.:
     <details>
     <summary>`STORYBOOK_JIRA_API_ENDPOINT=`</summary> 
     This will be the API endpoint for obtaining ticket data from JIRA. This will be something like: `https://<company-name>.atlassian.net/rest/api/latest/issue`
@@ -16,7 +38,7 @@ To use this addon, you will need to generate an API token for your JIRA account.
     </details>
     <details>
     <summary>`STORYBOOK_JIRA_API_KEY=`</summary>
-    You can obtain your api-key for JIRA [here](https://id.atlassian.com/manage-profile/security/api-tokens>).
+    To use this addon, you will need to generate an API token for your JIRA account. This can be acquired [here](https://id.atlassian.com/manage-profile/security/api-tokens).
     </details>
     <details>
     <summary>`STORYBOOK_JIRA_BASE_URL=`</summary>
@@ -24,7 +46,7 @@ To use this addon, you will need to generate an API token for your JIRA account.
     </details>
 
 
-2.  Within storybook you then need to run some middleware to set up the api. To do this, add a `middleware.js` file in your `.storybook` folder. This file then needs to contain the following code:
+3.  Within storybook you then need to run some middleware to set up the api. To do this, add a `middleware.js` file in your `.storybook` folder. This file then needs to contain the following code:
 
     ```js
     const fetch = require("node-fetch");
@@ -52,3 +74,19 @@ To use this addon, you will need to generate an API token for your JIRA account.
     }
     ```
     You might need to add `node-fetch` to your dev dependencies by running `yarn add node-fetch -D`.
+
+    ## Additional configuration
+
+    To make tabs for certain subticket statusses persistent and have them show up even if no subticket has that status, you can add status options to the addon configuration as is shown below:
+
+    ```js
+    addons: [
+      "@storybook/addon-essentials",
+      {
+        name: "storybook-jira-addon",
+        options: { statusOptions: [
+          'To do', 'In progress', 'Ready for review', 'done', 'on hold'
+        ] }
+      }
+    ],
+    ```
