@@ -77,18 +77,18 @@ export default {
 
     You might need to still add `node-fetch` to your dev dependencies by running `yarn add node-fetch -D`.
 
-    ## Additional configuration
+## Additional configuration
 
-    To make tabs for certain subticket statusses persistent and have them show up even if no subticket has that status, you can add status options to the addon configuration as is shown below:
+To make tabs for certain subticket statusses persistent and have them show up even if no subticket has that status, you can add status options to the addon configuration as is shown below:
 
-    ```js
-    addons: [
-      "@storybook/addon-essentials",
-      {
-        name: "storybook-jira-addon",
-        options: { statusOptions: [
-          'To do', 'In progress', 'Ready for review', 'done', 'on hold'
-        ] }
-      }
-    ],
-    ```
+```js
+addons: [
+  "@storybook/addon-essentials",
+  {
+    name: "storybook-jira-addon",
+    options: { statusOptions: [
+      'To do', 'In progress', 'Ready for review', 'done', 'on hold'
+    ] }
+  }
+],
+```
