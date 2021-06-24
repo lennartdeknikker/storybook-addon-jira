@@ -11,8 +11,6 @@ const parseTicketData = (data) => {
     overview: parsedOverview,
     subtasks: parsedSubtasks,
   }
-  
-  console.log('🚀 ~ parsedData', parsedData)
   return parsedData
 }
 

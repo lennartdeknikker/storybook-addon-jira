@@ -14,7 +14,7 @@ export const Panel = (props) => {
   });
 
   useEffect(() => {
-    console.log(results)
+    console.log('results changed to: ', results)
   }, [results])
 
 
@@ -27,14 +27,15 @@ export const Panel = (props) => {
         setResults(parsedData)
         localStorage.setItem('results', JSON.stringify(parsedData))
       } else {
-        const currentResults = JSON.parse(localStorage.getItem('results'))
+        const updatedResults = JSON.parse(localStorage.getItem('results'))
         const statusIdOfSubtask = parseToCamelCase(parsedData.overview.status.label)
         const idOfSubtask = parsedData.overview.ticketId
-        currentResults.subtasks.categories[statusIdOfSubtask].items.map(item => {
+        updatedResults.subtasks.categories[statusIdOfSubtask].items.map(item => {
           if (item.id === idOfSubtask) item.data = parsedData
           return item
         })
-        setResults(currentResults)
+        setResults(updatedResults)
+        localStorage.setItem('results', JSON.stringify(updatedResults))
       }
       setFetchingState(false)
     },
