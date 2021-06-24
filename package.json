@@ -1,6 +1,6 @@
 {
   "name": "storybook-jira-addon",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An extra panel to show JIRA tickets concerning certain components.",
   "author": "Lennart de Knikker",
   "storybook": {
