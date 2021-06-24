@@ -36,24 +36,28 @@ const Icon = styled(Icons)({
 
 const HeaderBar = styled.div({
   padding: convert(themes.normal).layoutMargin,
-  paddingLeft: convert(themes.normal).layoutMargin - 3,
-  background: "none",
+  paddingLeft: '30px',
+  paddingRight: '30px',
+  overflow: 'hidden',
+  background: convert(themes.normal).color.medium,
   color: "inherit",
   textAlign: "left",
   cursor: "pointer",
   borderLeft: "3px solid transparent",
   width: "100%",
   display: 'flex',
-
   "&:focus": {
     outline: "0 none",
     borderLeft: `3px solid ${convert(themes.normal).color.secondary}`,
-  },
+  }
 });
 
 const DetailView = styled.div({
   padding: convert(themes.normal).layoutMargin,
+  paddingLeft: '30px',
+  paddingRight: '30px',
   marginBottom: convert(themes.normal).layoutMargin,
+  backgroundColor: convert(themes.normal).color.lightest
 });
 
 export const ListItem = ({ tabSubtask, fetchData }) => {
@@ -78,23 +82,23 @@ export const ListItem = ({ tabSubtask, fetchData }) => {
               transform: `rotate(${opened ? 0 : -90}deg)`,
             }}
           />
-          <TicketLink ticketId={tabSubtask.id} summary={tabSubtask.summary} />
+          <TicketLink ticketId={tabSubtask.id} summary={tabSubtask.summary} textColor={convert(themes.normal).color.lightest} fontSize="1rem" />
         </HeaderBar>
       </Wrapper>
       {opened && overviewData ? 
-        <DetailView>
-          <PropertyBar
-            reporter={overviewData?.reporter}
-            assignedTo={overviewData?.assignedTo}
-            priority={overviewData?.priority}
-            created={overviewData?.created}
-            lastUpdated={overviewData?.lastUpdated}
-          />
-          {overviewData?.description && <Descript descriptionAdfString={overviewData.description} /> }
-          {overviewData?.comments?.items?.length > 0 && <CommentSection {...tabSubtask.data.overview.comments} /> }
-        </DetailView>        
-        : null
-        }
+      <DetailView>
+        <PropertyBar
+          reporter={overviewData?.reporter}
+          assignedTo={overviewData?.assignedTo}
+          priority={overviewData?.priority}
+          created={overviewData?.created}
+          lastUpdated={overviewData?.lastUpdated}
+        />
+        {overviewData?.description && <Descript descriptionAdfString={overviewData.description} /> }
+        {overviewData?.comments?.items?.length > 0 && <CommentSection {...tabSubtask.data.overview.comments} /> }
+      </DetailView>        
+      : null
+      }
     </Fragment>
   );
 };

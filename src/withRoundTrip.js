@@ -21,6 +21,7 @@ export const withRoundTrip = (storyFn) => {
       if (ticketId) {
         const fetchedData = await fetch(`/api?ticketId=${ticketId}`)
         data = await fetchedData.json()
+        console.log('🚀 ~ data', data)
       }
       const parsedData = parseTicketData(data)
       emit(EVENTS.RESULT, {parsedData: parsedData, isForSubtask: isForSubtask})

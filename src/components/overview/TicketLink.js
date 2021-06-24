@@ -2,7 +2,7 @@ import React from 'react';
 import { styled, themes, convert } from "@storybook/theming";
 import Icon from './Icon';
 
-const TicketLink = ({ ticketId, summary }) => {
+const TicketLink = ({ ticketId, summary, fontSize }) => {
   
   const TicketLinkContainer = styled.div({
     flex: 1,
@@ -20,7 +20,7 @@ const TicketLink = ({ ticketId, summary }) => {
   })
 
   const TicketTitle = styled.h1({
-    fontSize: '1.2rem',
+    fontSize: fontSize || '1.2rem',
     display: 'block',
     width: 'fit-content'
   })
