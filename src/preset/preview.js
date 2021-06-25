@@ -14,6 +14,6 @@ export const decorators = [withRoundTrip];
 
 export const parameters = {
   jira: { persistentTabs: [
-    'To do', 'In progress', 'Done'
+    'On hold', 'To do', 'In progress', 'Ready for test', 'Done'
   ] }
 }

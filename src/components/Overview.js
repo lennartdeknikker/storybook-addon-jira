@@ -7,13 +7,13 @@ import CommentSection from './overview/CommentSection';
 import PropertyBar from './overview/PropertyBar';
 import TicketLink from './overview/TicketLink';
 import Description from './overview/Description';
+import { parseToCamelCase } from '../helpers/parseCamelCase';
 
 export const RequestDataButton = styled.button({
   marginTop: '1rem',
 });
 
 const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => {
-
   const OverviewHeader = styled.div({
     display: 'flex',
     flexWrap: 'wrap'
@@ -32,7 +32,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     width: 'fit-content',
     borderRadius: '5px',
     height: 'fit-content',
-    margin: '0 0 10px 10px'
+    marginLeft: '10px'
   })
 
   return (
@@ -41,7 +41,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
         <OverviewHeader>
           {jiraSettings.id && <TicketLink ticketId={jiraSettings.id} summary={overviewResults.summary} />}
           {jiraSettings.id && <StatusLabel>{overviewResults?.status?.label || '...'}</StatusLabel>}
-          {overviewResults?.subtasksProgress?.length > 0 && <ProgressBar subtasksProgress={overviewResults?.subtasksProgress} />}
+          {overviewResults?.subtasksProgress?.length > 0 && <ProgressBar subtasksProgress={overviewResults?.subtasksProgress} idsInOrder={jiraSettings?.persistentTabs.map(tab => parseToCamelCase(tab))} />}
           <PropertyBar
             fetchId={jiraSettings.id}
             fetchData={fetchData}

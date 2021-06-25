@@ -1,6 +1,7 @@
 import React from 'react';
 import { styled, themes, convert } from "@storybook/theming";
 import mapJiraColor from '../helpers/mapJiraColor'
+import { parseToCamelCase } from '../helpers/parseCamelCase';
 
 const createProgressBarCssVariables = (subtasksProgress) => {
   const cssVariables = {}
@@ -12,7 +13,10 @@ const createProgressBarCssVariables = (subtasksProgress) => {
   return cssVariables
 }
 
-const ProgressBar = ({subtasksProgress}) => {
+const ProgressBar = ({subtasksProgress, idsInOrder}) => {
+
+  if (idsInOrder) subtasksProgress.sort((a, b) => idsInOrder.indexOf(a.id) < idsInOrder.indexOf(b.id) ? 1 : -1)
+
   const ProgressBarContainer = styled.div({
     display: 'flex',
     width: '100%',
@@ -21,6 +25,7 @@ const ProgressBar = ({subtasksProgress}) => {
 
   const ProgressBarWrapper = styled.div({
     ...createProgressBarCssVariables(subtasksProgress),
+    backgroundColor: convert(themes.normal).color.light,
     display: 'flex',
     borderRadius: '5px',
     overflow: 'hidden',
@@ -29,8 +34,10 @@ const ProgressBar = ({subtasksProgress}) => {
   })
 
   const ProgressBarPart = styled.div({
-    backgroundColor: 'blue',
-    height: '100%'
+    height: '100%',
+    width: '100%',
+    maxWidth: '0',
+    transition: 'max-width 1s ease'
   })
 
   const ProgressBarLabel = styled.span({
@@ -48,7 +55,7 @@ const ProgressBar = ({subtasksProgress}) => {
           key={index} 
           className={`ProgressBar-${subtaskProgress.id}`}
           style={{
-            width: `var(--${subtaskProgress.id}-width)`,
+            maxWidth: `var(--${subtaskProgress.id}-width)`,
             backgroundColor: `var(--${subtaskProgress.id}-color)`
           }}
           />

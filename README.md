@@ -79,16 +79,12 @@ export default {
 
 ## Additional configuration
 
-To make tabs for certain subticket statusses persistent and have them show up even if no subticket has that status, you can add status options to the addon configuration as is shown below:
+To make tabs for certain subticket statusses persistent and have them show up even if no subticket has that status, you can define status options within `.storybook/preview.js` as shown below. This array will also define the order in which statusses are shown in the progress bar.
 
 ```js
-addons: [
-  "@storybook/addon-essentials",
-  {
-    name: "storybook-jira-addon",
-    options: { statusOptions: [
-      'To do', 'In progress', 'Ready for review', 'done', 'on hold'
-    ] }
-  }
-],
+export const parameters = {
+  jira: { persistentTabs: [
+    'To do', 'In progress', 'Done'
+  ] }
+}
 ```
