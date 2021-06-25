@@ -39,9 +39,9 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
     <Placeholder>
       <OverviewContainer>
         <OverviewHeader>
-          <TicketLink ticketId={jiraSettings.id} summary={overviewResults.summary} />
-          <StatusLabel>{overviewResults?.status?.label || '...'}</StatusLabel>
-          {overviewResults?.subtasksProgress?.length > 0 && <ProgressBar subtasksProgress={overviewResults.subtasksProgress} />}
+          {jiraSettings.id && <TicketLink ticketId={jiraSettings.id} summary={overviewResults.summary} />}
+          {jiraSettings.id && <StatusLabel>{overviewResults?.status?.label || '...'}</StatusLabel>}
+          {overviewResults?.subtasksProgress?.length > 0 && <ProgressBar subtasksProgress={overviewResults?.subtasksProgress} />}
           <PropertyBar
             fetchId={jiraSettings.id}
             fetchData={fetchData}
