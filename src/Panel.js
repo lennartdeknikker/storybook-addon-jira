@@ -13,10 +13,6 @@ export const Panel = (props) => {
     data: {}
   });
 
-  useEffect(() => {
-    console.log(results)
-  }, [results])
-
   const [fetchingState, setFetchingState] = useState(false)
 
   // https://storybook.js.org/docs/react/addons/addons-api#usechannel

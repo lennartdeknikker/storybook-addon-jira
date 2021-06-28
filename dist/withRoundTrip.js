@@ -46,31 +46,29 @@ var withRoundTrip = function withRoundTrip(storyFn) {
               data = null;
 
               if (!ticketId) {
-                _context.next = 11;
+                _context.next = 9;
                 break;
               }
 
               _context.next = 5;
-              return fetch("".concat((_process$env = process.env) === null || _process$env === void 0 ? void 0 : _process$env.STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT, "?ticketId=").concat(ticketId));
+              return fetch("".concat(((_process$env = process.env) === null || _process$env === void 0 ? void 0 : _process$env.STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT) || '/api', "?ticketId=").concat(ticketId));
 
             case 5:
               fetchedData = _context.sent;
-              console.log('🚀 ~ fetchedData', fetchedData);
-              _context.next = 9;
+              _context.next = 8;
               return fetchedData.json();
 
-            case 9:
+            case 8:
               data = _context.sent;
-              console.log('🚀 ~ data in withRoundTrip', data);
 
-            case 11:
+            case 9:
               parsedData = (0, _parseTicketData["default"])(data);
               emit(_constants.EVENTS.RESULT, {
                 parsedData: parsedData,
                 isForSubtask: isForSubtask
               });
 
-            case 13:
+            case 11:
             case "end":
               return _context.stop();
           }

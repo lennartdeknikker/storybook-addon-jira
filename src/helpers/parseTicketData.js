@@ -3,9 +3,7 @@ import parseOverview from './parseTicketData/parseOverview'
 import parseSubtasks from './parseTicketData/parseSubtasks'
 
 const parseTicketData = (data) => {
-console.log('🚀 ~ data in parseTicketData', data)
-  const dataObject = JSON.parse(data)
-  console.log('🚀 ~ dataObject', dataObject)
+  const dataObject = typeof data === 'string' ? JSON.parse(data) : data
 
   const parsedSubtasks = parseSubtasks(dataObject)
   const parsedOverview = parseOverview(dataObject, parsedSubtasks)

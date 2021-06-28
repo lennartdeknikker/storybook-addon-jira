@@ -12,9 +12,7 @@ var _parseSubtasks = _interopRequireDefault(require("./parseTicketData/parseSubt
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var parseTicketData = function parseTicketData(data) {
-  console.log('🚀 ~ data in parseTicketData', data);
-  var dataObject = JSON.parse(data);
-  console.log('🚀 ~ dataObject', dataObject);
+  var dataObject = typeof data === 'string' ? JSON.parse(data) : data;
   var parsedSubtasks = (0, _parseSubtasks["default"])(dataObject);
   var parsedOverview = (0, _parseOverview["default"])(dataObject, parsedSubtasks);
   var parsedData = {

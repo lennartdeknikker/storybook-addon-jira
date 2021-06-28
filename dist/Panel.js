@@ -52,10 +52,6 @@ var Panel = function Panel(props) {
       results = _useState2[0],
       setResults = _useState2[1];
 
-  (0, _react.useEffect)(function () {
-    console.log(results);
-  }, [results]);
-
   var _useState3 = (0, _react.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
       fetchingState = _useState4[0],
