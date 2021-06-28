@@ -46,7 +46,7 @@ var withRoundTrip = function withRoundTrip(storyFn) {
               data = null;
 
               if (!ticketId) {
-                _context.next = 9;
+                _context.next = 11;
                 break;
               }
 
@@ -55,20 +55,22 @@ var withRoundTrip = function withRoundTrip(storyFn) {
 
             case 5:
               fetchedData = _context.sent;
-              _context.next = 8;
+              console.log('🚀 ~ fetchedData', fetchedData);
+              _context.next = 9;
               return fetchedData.json();
 
-            case 8:
-              data = _context.sent;
-
             case 9:
+              data = _context.sent;
+              console.log('🚀 ~ data in withRoundTrip', data);
+
+            case 11:
               parsedData = (0, _parseTicketData["default"])(data);
               emit(_constants.EVENTS.RESULT, {
                 parsedData: parsedData,
                 isForSubtask: isForSubtask
               });
 
-            case 11:
+            case 13:
             case "end":
               return _context.stop();
           }
