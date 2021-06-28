@@ -53,7 +53,7 @@ var PanelContent = function PanelContent(_ref) {
     title: "Overview",
     color: (0, _theming.convert)(_theming.themes.normal).color.positive
   }, /*#__PURE__*/_react["default"].createElement(_Overview["default"], {
-    overviewResults: results.overview,
+    overviewResults: results === null || results === void 0 ? void 0 : results.overview,
     jiraSettings: jiraSettings,
     fetchData: fetchData,
     fetchingState: fetchingState

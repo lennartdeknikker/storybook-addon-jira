@@ -36,7 +36,8 @@ exports.RequestDataButton = RequestDataButton;
 var Overview = function Overview(_ref) {
   var _overviewResults$stat, _overviewResults$stat2, _overviewResults$subt, _overviewResults$comm, _overviewResults$comm2;
 
-  var overviewResults = _ref.overviewResults,
+  var _ref$overviewResults = _ref.overviewResults,
+      overviewResults = _ref$overviewResults === void 0 ? {} : _ref$overviewResults,
       jiraSettings = _ref.jiraSettings,
       fetchData = _ref.fetchData,
       fetchingState = _ref.fetchingState;
@@ -80,7 +81,7 @@ var Overview = function Overview(_ref) {
     created: overviewResults === null || overviewResults === void 0 ? void 0 : overviewResults.created,
     lastUpdated: overviewResults === null || overviewResults === void 0 ? void 0 : overviewResults.lastUpdated
   })), (overviewResults === null || overviewResults === void 0 ? void 0 : overviewResults.description) && /*#__PURE__*/_react["default"].createElement(_Description["default"], {
-    descriptionAdfString: overviewResults === null || overviewResults === void 0 ? void 0 : overviewResults.description
+    descriptionAdfString: overviewResults.description
   }), (overviewResults === null || overviewResults === void 0 ? void 0 : (_overviewResults$comm = overviewResults.comments) === null || _overviewResults$comm === void 0 ? void 0 : (_overviewResults$comm2 = _overviewResults$comm.items) === null || _overviewResults$comm2 === void 0 ? void 0 : _overviewResults$comm2.length) > 0 && /*#__PURE__*/_react["default"].createElement(_CommentSection["default"], overviewResults.comments)) : 'Please add a ticket ID to this story.');
 };
 
