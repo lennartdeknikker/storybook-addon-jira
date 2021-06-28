@@ -13,7 +13,7 @@ export const RequestDataButton = styled.button({
   marginTop: '1rem',
 });
 
-const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => {
+const Overview = ({overviewResults = {}, jiraSettings, fetchData, fetchingState}) => {
   const OverviewHeader = styled.div({
     display: 'flex',
     flexWrap: 'wrap'
@@ -40,7 +40,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
         {jiraSettings.id ?
         <OverviewContainer>
           <OverviewHeader>
-            <TicketLink ticketId={jiraSettings.id} summary={overviewResults.summary} />
+            <TicketLink ticketId={jiraSettings.id} summary={overviewResults?.summary} />
             <StatusLabel>{overviewResults?.status?.label || '...'}</StatusLabel>
             {overviewResults?.subtasksProgress?.length > 0 && <ProgressBar subtasksProgress={overviewResults?.subtasksProgress} idsInOrder={jiraSettings?.persistentTabs.map(tab => parseToCamelCase(tab))} />}
             <PropertyBar
@@ -54,7 +54,7 @@ const Overview = ({overviewResults, jiraSettings, fetchData, fetchingState}) => 
               lastUpdated={overviewResults?.lastUpdated}
             />
           </OverviewHeader>
-          {overviewResults?.description && <Description descriptionAdfString={overviewResults?.description} /> }
+          {overviewResults?.description && <Description descriptionAdfString={overviewResults.description} /> }
           {overviewResults?.comments?.items?.length > 0 && <CommentSection {...overviewResults.comments} /> }
         </OverviewContainer>
         :

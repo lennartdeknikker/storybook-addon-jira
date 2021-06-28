@@ -27,7 +27,7 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
         title="Overview"
         color={convert(themes.normal).color.positive}
       >
-      <Overview overviewResults={results.overview} jiraSettings={jiraSettings} fetchData={fetchData} fetchingState={fetchingState} />
+      <Overview overviewResults={results?.overview} jiraSettings={jiraSettings} fetchData={fetchData} fetchingState={fetchingState} />
       </div>
       
       { statusIds && statusIds.map((statusId, index) => {

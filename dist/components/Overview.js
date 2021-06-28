@@ -64,7 +64,7 @@ var Overview = function Overview(_ref) {
 
   return /*#__PURE__*/_react["default"].createElement(_components.Placeholder, null, jiraSettings.id ? /*#__PURE__*/_react["default"].createElement(OverviewContainer, null, /*#__PURE__*/_react["default"].createElement(OverviewHeader, null, /*#__PURE__*/_react["default"].createElement(_TicketLink["default"], {
     ticketId: jiraSettings.id,
-    summary: overviewResults.summary
+    summary: overviewResults === null || overviewResults === void 0 ? void 0 : overviewResults.summary
   }), /*#__PURE__*/_react["default"].createElement(StatusLabel, null, (overviewResults === null || overviewResults === void 0 ? void 0 : (_overviewResults$stat2 = overviewResults.status) === null || _overviewResults$stat2 === void 0 ? void 0 : _overviewResults$stat2.label) || '...'), (overviewResults === null || overviewResults === void 0 ? void 0 : (_overviewResults$subt = overviewResults.subtasksProgress) === null || _overviewResults$subt === void 0 ? void 0 : _overviewResults$subt.length) > 0 && /*#__PURE__*/_react["default"].createElement(_ProgressBar["default"], {
     subtasksProgress: overviewResults === null || overviewResults === void 0 ? void 0 : overviewResults.subtasksProgress,
     idsInOrder: jiraSettings === null || jiraSettings === void 0 ? void 0 : jiraSettings.persistentTabs.map(function (tab) {
