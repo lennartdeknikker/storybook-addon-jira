@@ -13,8 +13,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var parseTicketData = function parseTicketData(data) {
   console.log('🚀 ~ data in parseTicketData', data);
-  var parsedSubtasks = (0, _parseSubtasks["default"])(data);
-  var parsedOverview = (0, _parseOverview["default"])(data, parsedSubtasks);
+  var dataObject = JSON.parse(data);
+  console.log('🚀 ~ dataObject', dataObject);
+  var parsedSubtasks = (0, _parseSubtasks["default"])(dataObject);
+  var parsedOverview = (0, _parseOverview["default"])(dataObject, parsedSubtasks);
   var parsedData = {
     overview: parsedOverview,
     subtasks: parsedSubtasks
