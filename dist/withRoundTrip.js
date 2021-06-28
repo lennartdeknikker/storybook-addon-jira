@@ -51,7 +51,7 @@ var withRoundTrip = function withRoundTrip(storyFn) {
               }
 
               _context.next = 5;
-              return fetch("".concat(((_process$env = process.env) === null || _process$env === void 0 ? void 0 : _process$env.STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT) || '/api', "?ticketId=").concat(ticketId));
+              return fetch("".concat((_process$env = process.env) === null || _process$env === void 0 ? void 0 : _process$env.STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT, "?ticketId=").concat(ticketId));
 
             case 5:
               fetchedData = _context.sent;

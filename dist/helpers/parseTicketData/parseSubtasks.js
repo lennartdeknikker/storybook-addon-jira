@@ -14,7 +14,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var parseSubtasks = function parseSubtasks(data) {
-  var _data$fields, _data$fields2;
+  var _data$fields, _data$fields2, _data$fields2$subtask;
 
   // create subtasks object
   var parsedSubtasks = {
@@ -24,33 +24,37 @@ var parseSubtasks = function parseSubtasks(data) {
 
   parsedSubtasks.amount = data === null || data === void 0 ? void 0 : (_data$fields = data.fields) === null || _data$fields === void 0 ? void 0 : _data$fields.subtasks.length;
 
-  var _iterator = _createForOfIteratorHelper(data === null || data === void 0 ? void 0 : (_data$fields2 = data.fields) === null || _data$fields2 === void 0 ? void 0 : _data$fields2.subtasks),
-      _step;
+  if ((data === null || data === void 0 ? void 0 : (_data$fields2 = data.fields) === null || _data$fields2 === void 0 ? void 0 : (_data$fields2$subtask = _data$fields2.subtasks) === null || _data$fields2$subtask === void 0 ? void 0 : _data$fields2$subtask.length) > 0) {
+    var _data$fields3;
 
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var subtask = _step.value;
-      // pull status from subtask and parse to statusId
-      var statusId = (0, _parseCamelCase.parseToCamelCase)(subtask.fields.status.name); // use statusId to create the category if it does not exist yet.
+    var _iterator = _createForOfIteratorHelper(data === null || data === void 0 ? void 0 : (_data$fields3 = data.fields) === null || _data$fields3 === void 0 ? void 0 : _data$fields3.subtasks),
+        _step;
 
-      if (!parsedSubtasks.categories[statusId]) parsedSubtasks.categories[statusId] = {
-        color: subtask.fields.status.statusCategory.colorName,
-        amount: 0,
-        items: []
-      }; // update amount of subtasks for this status category
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var subtask = _step.value;
+        // pull status from subtask and parse to statusId
+        var statusId = (0, _parseCamelCase.parseToCamelCase)(subtask.fields.status.name); // use statusId to create the category if it does not exist yet.
 
-      parsedSubtasks.categories[statusId].amount++; // add subtask to category
+        if (!parsedSubtasks.categories[statusId]) parsedSubtasks.categories[statusId] = {
+          color: subtask.fields.status.statusCategory.colorName,
+          amount: 0,
+          items: []
+        }; // update amount of subtasks for this status category
 
-      parsedSubtasks.categories[statusId].items.push({
-        id: subtask.key,
-        summary: subtask.fields.summary,
-        apiLink: subtask.self
-      });
+        parsedSubtasks.categories[statusId].amount++; // add subtask to category
+
+        parsedSubtasks.categories[statusId].items.push({
+          id: subtask.key,
+          summary: subtask.fields.summary,
+          apiLink: subtask.self
+        });
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
   }
 
   return parsedSubtasks;
