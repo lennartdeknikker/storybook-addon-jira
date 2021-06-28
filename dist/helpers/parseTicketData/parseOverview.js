@@ -12,7 +12,7 @@ var _parseComments = _interopRequireDefault(require("./parseOverview/parseCommen
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var parseOverview = function parseOverview(data, parsedSubtasks) {
-  var _data$fields, _data$fields$status, _data$fields2, _data$fields2$status, _data$fields2$status$, _data$fields3, _data$fields4, _data$fields5, _data$fields5$assigne, _data$fields6, _data$fields6$assigne, _data$fields7, _data$fields8, _data$fields9, _data$fields10, _data$fields11, _data$fields11$report, _data$fields12, _data$fields12$report, _data$fields13, _data$fields13$commen;
+  var _data$fields, _data$fields$status, _data$fields2, _data$fields2$status, _data$fields2$status$, _data$fields3, _data$fields4, _data$fields5, _data$fields5$assigne, _data$fields6, _data$fields6$assigne, _data$fields7, _data$fields8, _data$fields9, _data$fields10, _data$fields11, _data$fields11$report, _data$fields12, _data$fields12$report, _data$fields13, _data$fields13$commen, _data$fields13$commen2;
 
   return {
     ticketId: data === null || data === void 0 ? void 0 : data.key,
@@ -37,7 +37,7 @@ var parseOverview = function parseOverview(data, parsedSubtasks) {
       name: data === null || data === void 0 ? void 0 : (_data$fields11 = data.fields) === null || _data$fields11 === void 0 ? void 0 : (_data$fields11$report = _data$fields11.reporter) === null || _data$fields11$report === void 0 ? void 0 : _data$fields11$report.displayName,
       avatar: data === null || data === void 0 ? void 0 : (_data$fields12 = data.fields) === null || _data$fields12 === void 0 ? void 0 : (_data$fields12$report = _data$fields12.reporter) === null || _data$fields12$report === void 0 ? void 0 : _data$fields12$report.avatarUrls['48x48']
     },
-    comments: (0, _parseComments["default"])(data === null || data === void 0 ? void 0 : (_data$fields13 = data.fields) === null || _data$fields13 === void 0 ? void 0 : (_data$fields13$commen = _data$fields13.comment) === null || _data$fields13$commen === void 0 ? void 0 : _data$fields13$commen.comments)
+    comments: (data === null || data === void 0 ? void 0 : (_data$fields13 = data.fields) === null || _data$fields13 === void 0 ? void 0 : (_data$fields13$commen = _data$fields13.comment) === null || _data$fields13$commen === void 0 ? void 0 : (_data$fields13$commen2 = _data$fields13$commen.comments) === null || _data$fields13$commen2 === void 0 ? void 0 : _data$fields13$commen2.length) > 0 ? (0, _parseComments["default"])(data.fields.comment.comments) : []
   };
 };
 

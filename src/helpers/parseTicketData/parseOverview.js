@@ -25,7 +25,7 @@ const parseOverview = (data, parsedSubtasks) => {
       name: data?.fields?.reporter?.displayName,
       avatar: data?.fields?.reporter?.avatarUrls['48x48']
     },
-    comments: parseComments(data?.fields?.comment?.comments)
+    comments: data?.fields?.comment?.comments?.length > 0 ? parseComments(data.fields.comment.comments) : []
   }
 }
 
