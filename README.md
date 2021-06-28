@@ -29,19 +29,19 @@ export default {
     ```
 2.  You will need to add the following values to your `.env` file.:
     <details>
-    <summary>`STORYBOOK_JIRA_API_ENDPOINT=`</summary> 
+    <summary>`STORYBOOK_JIRA_API_ENDPOINT`</summary> 
     This will be the API endpoint for obtaining ticket data from JIRA. This will be something like: `https://<company-name>.atlassian.net/rest/api/latest/issue`
     </details>
     <details>
-    <summary>`STORYBOOK_JIRA_USERNAME=`</summary>
+    <summary>`STORYBOOK_JIRA_USERNAME`</summary>
     This will be your username for logging in to JIRA. Most of the times it will just be your email address.
     </details>
     <details>
-    <summary>`STORYBOOK_JIRA_API_KEY=`</summary>
+    <summary>`STORYBOOK_JIRA_API_KEY`</summary>
     To use this addon, you will need to generate an API token for your JIRA account. This can be acquired [here](https://id.atlassian.com/manage-profile/security/api-tokens).
     </details>
     <details>
-    <summary>`STORYBOOK_JIRA_BASE_URL=`</summary>
+    <summary>`STORYBOOK_JIRA_BASE_URL`</summary>
     This will be something like: `https://<company-name>.atlassian.net/browse`.
     </details>
 
@@ -76,6 +76,52 @@ export default {
     *Alternatively you can set up authentication using OAuth as is described [here](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/#authentication).*
 
     You might need to still add `node-fetch` to your dev dependencies by running `yarn add node-fetch -D`.
+
+## Deploying to netlify
+When deploying to netlify, you can get the addon working by adding a serverless function.
+
+To do this I recommend taking the steps below:
+1. Create a new file called `netlify/functions/get-ticket-data.js`
+
+    *Creating this file in a different folder is possible, but requires additional configuration in the Netlify UI.*
+
+2. add the code below to `get-ticket-data.js`:
+```js
+const fetch = require('node-fetch');
+
+exports.handler = async function (event, context) {
+  
+  const myHeaders = new fetch.Headers();
+  const authHeader = `Basic ${Buffer.from(`${process.env.STORYBOOK_JIRA_USERNAME}:${process.env.STORYBOOK_JIRA_API_KEY}`).toString('base64')}`
+  myHeaders.append("Authorization", authHeader);
+
+  const requestOptions = {
+    method: 'GET',
+    headers: myHeaders,
+    redirect: 'follow'
+  };
+
+  const ticketData = await fetch(`${process.env.STORYBOOK_JIRA_API_ENDPOINT}/${event.queryStringParameters.ticketId}`, requestOptions)
+  .then(response => response.text())
+  .then(result => {
+    return result
+  })
+  .catch(error => console.log('error', error));
+  
+  return {
+    statusCode: 200,
+    body: JSON.stringify(ticketData)
+  }
+}
+```
+3. Add the created endpoint to your environment variables on netlify:
+    <details>
+    <summary>`STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT`</summary> 
+    In this case this will be: `/.netlify/functions/get-ticket-data`
+    </details>
+
+
+*[Read more about setting up serverless functions in Netlify here.](https://docs.netlify.com/functions/overview/)*
 
 ## Additional configuration
 
