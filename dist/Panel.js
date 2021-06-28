@@ -43,19 +43,23 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Panel = function Panel(props) {
   // https://storybook.js.org/docs/react/addons/addons-api#useaddonstate
-  var _useAddonState = (0, _api.useAddonState)(_constants.ADDON_ID, {
+  var _useState = (0, _react.useState)({
     overview: {},
     subtasks: {},
     data: {}
   }),
-      _useAddonState2 = _slicedToArray(_useAddonState, 2),
-      results = _useAddonState2[0],
-      setResults = _useAddonState2[1];
-
-  var _useState = (0, _react.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
-      fetchingState = _useState2[0],
-      setFetchingState = _useState2[1]; // https://storybook.js.org/docs/react/addons/addons-api#usechannel
+      results = _useState2[0],
+      setResults = _useState2[1];
+
+  (0, _react.useEffect)(function () {
+    console.log(results);
+  }, [results]);
+
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      fetchingState = _useState4[0],
+      setFetchingState = _useState4[1]; // https://storybook.js.org/docs/react/addons/addons-api#usechannel
 
 
   var emit = (0, _api.useChannel)(_defineProperty({}, _constants.EVENTS.RESULT, function () {

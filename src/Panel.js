@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useAddonState, useChannel } from "@storybook/api";
+import { useChannel } from "@storybook/api";
 import { AddonPanel } from "@storybook/components";
-import { ADDON_ID, EVENTS } from "./constants";
+import { EVENTS } from "./constants";
 import { PanelContent } from "./components/PanelContent";
 import { parseToCamelCase } from "./helpers/parseCamelCase";
 
 export const Panel = (props) => {
   // https://storybook.js.org/docs/react/addons/addons-api#useaddonstate
-  const [results, setResults] = useAddonState(ADDON_ID, {
+  const [results, setResults] = useState({
     overview: {},
     subtasks: {},
     data: {}
   });
+
+  useEffect(() => {
+    console.log(results)
+  }, [results])
 
   const [fetchingState, setFetchingState] = useState(false)
 
