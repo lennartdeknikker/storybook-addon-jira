@@ -7,8 +7,6 @@ exports.withRoundTrip = void 0;
 
 var _clientApi = require("@storybook/client-api");
 
-var _coreEvents = require("@storybook/core-events");
-
 var _constants = require("./constants");
 
 var _parseTicketData = _interopRequireDefault(require("./helpers/parseTicketData"));
@@ -79,7 +77,7 @@ var withRoundTrip = function withRoundTrip(storyFn) {
     return function (_x) {
       return _ref2.apply(this, arguments);
     };
-  }()), _defineProperty(_useChannel, _coreEvents.STORY_CHANGED, clearData), _defineProperty(_useChannel, _constants.EVENTS.CLEAR, clearData), _useChannel));
+  }()), _defineProperty(_useChannel, _constants.EVENTS.CLEAR, clearData), _useChannel));
   return storyFn();
 };
 

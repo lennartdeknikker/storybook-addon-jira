@@ -1,5 +1,4 @@
 import { useChannel } from "@storybook/client-api";
-import { STORY_CHANGED } from "@storybook/core-events";
 import { EVENTS } from "./constants";
 import parseTicketData from './helpers/parseTicketData'
 
@@ -25,7 +24,6 @@ export const withRoundTrip = (storyFn) => {
       const parsedData = parseTicketData(data)
       emit(EVENTS.RESULT, {parsedData: parsedData, isForSubtask: isForSubtask})
     },
-    [STORY_CHANGED]: clearData,
     [EVENTS.CLEAR]: clearData,
   });
   return storyFn();

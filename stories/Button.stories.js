@@ -24,11 +24,24 @@ Secondary.args = {
   label: "Button",
 };
 
+Secondary.parameters = {
+  jira: {
+    id: 'RING-1029'
+  }
+}
+
+
 export const Large = Template.bind({});
 Large.args = {
   size: "large",
   label: "Button",
 };
+
+Large.parameters = {
+  jira: {
+    id: 'RING-1025'
+  }
+}
 
 export const Small = Template.bind({});
 Small.args = {
