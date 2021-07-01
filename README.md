@@ -114,7 +114,7 @@ exports.handler = async function (event, context) {
   }
 }
 ```
-3. Add the created endpoint to your environment variables on netlify:
+3. Add the same environment variables to Netlify as well as this new one for the created endpoint:
     <details>
     <summary>`STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT`</summary> 
     In this case this will be: `/.netlify/functions/get-ticket-data`
