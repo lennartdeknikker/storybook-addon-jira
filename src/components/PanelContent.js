@@ -13,6 +13,7 @@ export const PanelContent = ({ results, fetchData, fetchingState }) => {
   useEffect(() => fetchData(jiraSettings?.id), [jiraSettings?.id])
   
   const statusIds = getAllStatusIds(results?.subtasks?.categories, jiraSettings?.persistentTabs)
+  console.log('🚀 ~ statusIds', statusIds)
   const EmptyMessage = styled.div({
     padding: '30px'
   })

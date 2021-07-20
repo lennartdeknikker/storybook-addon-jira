@@ -1,12 +1,16 @@
 import { parseToCamelCase } from "./parseCamelCase";
 
   const getAllStatusIds = (subtasksCategories, persistentCategories) => {
+  console.log('🚀 ~ subtasksCategories', subtasksCategories)
+  console.log('🚀 ~ persistentCategories', persistentCategories)
     if (subtasksCategories && persistentCategories) {
-      const labels = Object.keys(subtasksCategories)
-      for (const category of persistentCategories) {
-        labels.push(parseToCamelCase(category))
+      const labels =persistentCategories.map(category => parseToCamelCase(category))
+      const newLabels = Object.keys(subtasksCategories)
+      for (const newLabel of newLabels) {
+        if (!labels.includes(newLabel)) labels.push(newLabel)
       }
-      return [...new Set(labels)].reverse()
+      console.log('🚀 ~ labels', labels)
+      return labels
     }
     return null
   }

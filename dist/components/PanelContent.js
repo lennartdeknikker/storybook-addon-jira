@@ -40,6 +40,7 @@ var PanelContent = function PanelContent(_ref) {
     return fetchData(jiraSettings === null || jiraSettings === void 0 ? void 0 : jiraSettings.id);
   }, [jiraSettings === null || jiraSettings === void 0 ? void 0 : jiraSettings.id]);
   var statusIds = (0, _getAllStatusIds["default"])(results === null || results === void 0 ? void 0 : (_results$subtasks = results.subtasks) === null || _results$subtasks === void 0 ? void 0 : _results$subtasks.categories, jiraSettings === null || jiraSettings === void 0 ? void 0 : jiraSettings.persistentTabs);
+  console.log('🚀 ~ statusIds', statusIds);
 
   var EmptyMessage = _theming.styled.div({
     padding: '30px'

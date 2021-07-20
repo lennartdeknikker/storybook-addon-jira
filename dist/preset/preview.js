@@ -21,7 +21,7 @@ var decorators = [_withRoundTrip.withRoundTrip];
 exports.decorators = decorators;
 var parameters = {
   jira: {
-    persistentTabs: ['On hold', 'To do', 'In progress', 'Ready for test', 'Done']
+    persistentTabs: ['On hold', 'To do', 'Done']
   }
 };
 exports.parameters = parameters;
