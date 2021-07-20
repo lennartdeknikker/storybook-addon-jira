@@ -63,7 +63,7 @@ const ProgressBar = ({subtasksProgress, idsInOrder}) => {
         })}
       </ProgressBarWrapper>
       <ProgressBarLabel>
-        {subtasksProgress[0]?.percentage}% {subtasksProgress[0]?.id}
+        {Math.floor(subtasksProgress[0]?.percentage)}% {subtasksProgress[0]?.id}
       </ProgressBarLabel>
     </ProgressBarContainer>
   )

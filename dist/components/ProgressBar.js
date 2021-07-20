@@ -94,7 +94,7 @@ var ProgressBar = function ProgressBar(_ref) {
         backgroundColor: "var(--".concat(subtaskProgress.id, "-color)")
       }
     });
-  })), /*#__PURE__*/_react["default"].createElement(ProgressBarLabel, null, (_subtasksProgress$ = subtasksProgress[0]) === null || _subtasksProgress$ === void 0 ? void 0 : _subtasksProgress$.percentage, "% ", (_subtasksProgress$2 = subtasksProgress[0]) === null || _subtasksProgress$2 === void 0 ? void 0 : _subtasksProgress$2.id));
+  })), /*#__PURE__*/_react["default"].createElement(ProgressBarLabel, null, Math.floor((_subtasksProgress$ = subtasksProgress[0]) === null || _subtasksProgress$ === void 0 ? void 0 : _subtasksProgress$.percentage), "% ", (_subtasksProgress$2 = subtasksProgress[0]) === null || _subtasksProgress$2 === void 0 ? void 0 : _subtasksProgress$2.id));
 };
 
 var _default = ProgressBar;
