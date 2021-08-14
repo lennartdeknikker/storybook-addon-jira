@@ -3,7 +3,7 @@ import { styled, themes, convert } from "@storybook/theming";
 import mapJiraColor from '../helpers/mapJiraColor'
 import { parseToCamelCase } from '../helpers/parseCamelCase';
 
-const createProgressBarCssVariables = (subtasksProgress) => {
+const createProgressBarCssVariables = subtasksProgress => {
   const cssVariables = {}
   // Add percentages of progressbarParts for widths.
   for (let subtaskProgress of subtasksProgress) {
