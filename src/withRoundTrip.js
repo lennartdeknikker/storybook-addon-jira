@@ -18,7 +18,7 @@ export const withRoundTrip = (storyFn) => {
     [EVENTS.REQUEST]: async ({ ticketId, isForSubtask }) => {
       let data = null
       if (ticketId) {
-        const fetchedData = await fetch(`${process.env?.STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT || '/api'}?ticketId=${ticketId}`)
+        const fetchedData = await fetch(`${process?.env?.STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT || '/api'}?ticketId=${ticketId}`)
         data = await fetchedData.json()
       }
       const parsedData = parseTicketData(data)

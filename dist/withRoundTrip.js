@@ -34,8 +34,7 @@ var withRoundTrip = function withRoundTrip(storyFn) {
 
   var emit = (0, _clientApi.useChannel)((_useChannel = {}, _defineProperty(_useChannel, _constants.EVENTS.REQUEST, function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref) {
-      var ticketId, isForSubtask, data, _process$env, fetchedData, parsedData;
-
+      var ticketId, isForSubtask, data, _process, _process$env, fetchedData, parsedData;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -49,8 +48,7 @@ var withRoundTrip = function withRoundTrip(storyFn) {
               }
 
               _context.next = 5;
-              return fetch("".concat(((_process$env = process.env) === null || _process$env === void 0 ? void 0 : _process$env.STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT) || '/api', "?ticketId=").concat(ticketId));
-
+              return fetch("".concat(((_process = process) === null || _process === void 0 ? void 0 : (_process$env = _process.env) === null || _process$env === void 0 ? void 0 : _process$env.STORYBOOK_MIDDLEWARE_JIRA_ENDPOINT) || '/api', "?ticketId=").concat(ticketId));
             case 5:
               fetchedData = _context.sent;
               _context.next = 8;
@@ -65,7 +63,6 @@ var withRoundTrip = function withRoundTrip(storyFn) {
                 parsedData: parsedData,
                 isForSubtask: isForSubtask
               });
-
             case 11:
             case "end":
               return _context.stop();
