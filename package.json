@@ -1,15 +1,7 @@
 {
-  "name": "storybook-jira-addon",
-  "version": "2.3.1",
+  "name": "@exa-online/storybook-jira-addon",
+  "version": "3.0.1",
   "description": "An extra panel to show JIRA tickets concerning certain components.",
-  "author": "Lennart de Knikker",
-  "storybook": {
-    "displayName": "JIRA",
-    "unsupportedFrameworks": [
-      "react-native"
-    ],
-    "icon": "https://raw.githubusercontent.com/lennartdeknikker/storybook-addon-jira/main/docs/jira-logo.png"
-  },
   "keywords": [
     "storybook-addons",
     "tickets",
@@ -21,63 +13,111 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/lennartdeknikker/storybook-addon-jira"
+    "url": "https://github.com/eXa-online/storybook-addon-jira.git"
   },
   "license": "MIT",
-  "main": "dist/preset",
+  "author": "Lennart de Knikker",
+  "contributors": [
+    "Silke Jänichen <sjaenichen@exa-online.de>"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "node": "./dist/index.js",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./manager": "./dist/manager.mjs",
+    "./preview": "./dist/preview.mjs",
+    "./package.json": "./package.json"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md",
-    "*.js"
+    "*.js",
+    "*.d.ts"
   ],
   "scripts": {
     "clean": "rimraf ./dist",
-    "buildBabel": "babel ./src --out-dir ./dist --extensions \".js,.jsx,.ts,.tsx\"",
-    "build": "concurrently \"npm run build-storybook\" \"npm run buildBabel\"",
+    "prebuild": "npm run clean",
+    "build": "tsup",
+    "build:watch": "npm run build -- --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6007",
-    "dev": "concurrently \"npm run storybook -- --no-manager-cache --quiet\" \"npm run build -- --watch\"",
-    "build-storybook": "build-storybook",
-    "release": "npm run build && auto shipit"
+    "start": "run-p build:watch 'storybook --quiet'",
+    "prerelease": "zx scripts/prepublish-checks.mjs",
+    "release": "npm run build && auto shipit",
+    "eject-ts": "zx scripts/eject-typescript.mjs",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
-    "@babel/preset-react": "^7.12.5",
-    "@babel/preset-typescript": "^7.13.0",
-    "@storybook/react": "^6.3.1",
-    "auto": "^10.29.3",
-    "babel-loader": "^8.1.0",
-    "chalk": "^2.4.2",
-    "concurrently": "^5.3.0",
-    "node-fetch": "^2.6.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.2.4"
-  },
-  "peerDependencies": {
-    "@storybook/addons": "^6.3.1",
-    "@storybook/api": "^6.3.1",
-    "@storybook/components": "^6.3.1",
-    "@storybook/core-events": "^6.3.1",
-    "@storybook/theming": "^6.3.1",
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    },
-    "react-dom": {
-      "optional": true
-    }
+    "@storybook/addon-essentials": "7.0.0",
+    "@storybook/addon-interactions": "7.0.0",
+    "@storybook/addon-links": "7.0.0",
+    "@storybook/blocks": "7.0.0",
+    "@storybook/components": "7.0.0",
+    "@storybook/core-events": "7.0.0",
+    "@storybook/manager": "0.0.0-pr-24676-sha-214a6f84",
+    "@storybook/manager-api": "7.0.0",
+    "@storybook/preview": "0.0.0-pr-24676-sha-214a6f84",
+    "@storybook/preview-api": "7.0.0",
+    "@storybook/react": "7.0.0",
+    "@storybook/react-vite": "7.0.0",
+    "@storybook/testing-library": "^0.2.2",
+    "@storybook/theming": "7.0.0",
+    "@storybook/types": "7.0.0",
+    "@types/node": "^18.15.0",
+    "@types/react": "^16.14.51",
+    "@types/react-dom": "^16.9.22",
+    "@vitejs/plugin-react": "^4.1.1",
+    "auto": "^11.0.4",
+    "boxen": "^7.1.1",
+    "dedent": "^1.5.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.3",
+    "prompts": "^2.4.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "rimraf": "^5.0.5",
+    "storybook": "7.0.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0",
+    "zx": "^7.2.3"
   },
   "publishConfig": {
     "access": "public"
   },
+  "bundler": {
+    "exportEntries": [
+      "src/index.ts"
+    ],
+    "managerEntries": [
+      "src/manager.ts"
+    ],
+    "previewEntries": [
+      "src/preview.ts"
+    ]
+  },
+  "storybook": {
+    "displayName": "JIRA",
+    "supportedFrameworks": [
+      "react",
+      "vue",
+      "angular",
+      "web-components",
+      "ember",
+      "html",
+      "svelte",
+      "preact",
+      "react-native"
+    ],
+    "icon": "https://raw.githubusercontent.com/lennartdeknikker/storybook-addon-jira/main/docs/jira-logo.png"
+  },
   "dependencies": {
-    "nano-markdown": "^1.2.1"
+    "nano-markdown": "^1.2.2"
   }
 }
