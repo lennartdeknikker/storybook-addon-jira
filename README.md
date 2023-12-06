@@ -33,11 +33,7 @@ export default {
     This will be the API endpoint for obtaining ticket data from JIRA. This will be something like: `https://<company-name>.atlassian.net/rest/api/latest/issue`
     </details>
     <details>
-    <summary>`STORYBOOK_JIRA_USERNAME`</summary>
-    This will be your username for logging in to JIRA. Most of the times it will just be your email address.
-    </details>
-    <details>
-    <summary>`STORYBOOK_JIRA_API_KEY`</summary>
+    <summary>`STORYBOOK_JIRA_PERSONAL_ACCESS_TOKEN`</summary>
     To use this addon, you will need to generate an API token for your JIRA account. This can be acquired [here](https://id.atlassian.com/manage-profile/security/api-tokens).
     </details>
     <details>
@@ -46,34 +42,55 @@ export default {
     </details>
 
 
-3.  Within storybook you then need to run some middleware to set up the api. To do this, add a `middleware.js` file in your `.storybook` folder. To use basic authentication this file then needs to contain the following code:
+3.  Within storybook you then need to run some middleware to set up the api. To do this, add a `middleware.js` file in your `.storybook` folder. To use authenticated requests for fetching JIRA API and secured avatar images, this file needs to contain the following code:
 
     ```js
-    const fetch = require("node-fetch");
-
-    module.exports = function expressMiddleware (router) {
+    module.exports = function expressMiddleware(router) {
+  
       router.get('/api', (req, res) => {
-
-          const myHeaders = new fetch.Headers();
-          const authHeader = `Basic ${Buffer.from(`${process.env?.STORYBOOK_JIRA_USERNAME}:${process.env?.STORYBOOK_JIRA_API_KEY}`).toString('base64')}`
-          myHeaders.append("Authorization", authHeader);
-
-          const requestOptions = {
+          const myHeaders = new Headers()
+          myHeaders.append("Authorization", `Bearer ${process.env?.STORYBOOK_JIRA_PERSONAL_ACCESS_TOKEN}`)
+          myHeaders.append("Content-Type", "application/json")
+        
+          const myInit = {
             method: 'GET',
             headers: myHeaders,
-            redirect: 'follow'
-          };
+            redirect: 'follow',
+          }
 
-          fetch(`${process.env.STORYBOOK_JIRA_API_ENDPOINT}/${req.query?.ticketId}`, requestOptions)
+          const myRequest = new Request(`${process.env.STORYBOOK_JIRA_API_ENDPOINT}/${req.query?.ticketId}`)
+          fetch(myRequest, myInit)
             .then(response => response.json())
             .then(result => {
               res.send(result)
             })
             .catch(error => console.log('error', error));
       })
+
+      router.get('/avatar', (req, res) => {
+        const myHeaders = new Headers()
+        myHeaders.append("Authorization", `Bearer ${process.env.STORYBOOK_JIRA_PERSONAL_ACCESS_TOKEN}`)
+      
+        const myInit = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow',
+        }
+
+        const myRequest = new Request(req.query?.url)
+        return fetch(myRequest, myInit)
+          
+          .then(response => response.blob())
+          .then((blob) => {
+            res.type(blob.type)
+            blob.arrayBuffer().then((buf) => {
+              res.send(Buffer.from(buf))
+            })
+          })
+          .catch(error => console.log('error', error));
+      })
     }
     ```
-    *Alternatively you can set up authentication using OAuth as is described [here](https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/#authentication).*
 
     You might need to still add `node-fetch` to your dev dependencies by running `yarn add node-fetch -D`.
 
@@ -122,15 +139,3 @@ exports.handler = async function (event, context) {
 
 
 *[Read more about setting up serverless functions in Netlify here.](https://docs.netlify.com/functions/overview/)*
-
-## Additional configuration
-
-To make tabs for certain subticket statusses persistent and have them show up even if no subticket has that status, you can define status options within `.storybook/preview.js` as shown below. This array will also define the order in which statusses are shown in the progress bar.
-
-```js
-export const parameters = {
-  jira: { persistentTabs: [
-    'To do', 'In progress', 'Done'
-  ] }
-}
-```
